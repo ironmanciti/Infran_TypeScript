@@ -1,0 +1,547 @@
+{
+  "section": "03",
+  "title": "Section 3. 제어문",
+  "version": "1.0.0",
+  "questions": [
+    {
+      "id": "s03-q1",
+      "lecture": "17강",
+      "topic": "if-else",
+      "question": "출력 결과로 올바른 것은?",
+      "code": "const isRaining = false;\nif (isRaining) { console.log(\"우산을 챙깁니다\"); }\nelse { console.log(\"모자를 챙깁니다\"); }",
+      "choices": {
+        "A": "우산을 챙깁니다",
+        "B": "모자를 챙깁니다",
+        "C": "우산을 챙깁니다, 모자를 챙깁니다"
+      },
+      "answer": "B",
+      "wrongReasons": {
+        "A": "if 블록은 조건이 true일 때만 실행돼요. isRaining에 어떤 값이 들어 있는지 다시 보세요. 17강 groceryShopping 예제에서 값을 false로 바꿨을 때 어느 블록이 실행됐는지 떠올려 보세요.",
+        "C": "if와 else는 둘 중 하나만 실행됩니다. 두 블록이 함께 실행되는 일은 없어요. 17강 groceryShopping 예제에서 출력이 몇 줄이었는지 떠올려 보세요."
+      },
+      "explanation": "isRaining이 false이므로 if 블록은 건너뛰고 else 블록만 실행됩니다. if와 else는 조건에 따라 둘 중 하나만 실행돼요."
+    },
+    {
+      "id": "s03-q2",
+      "lecture": "17강",
+      "topic": "비교 연산자",
+      "question": "isPassed에 마우스를 올렸을 때 추론되는 타입으로 올바른 것은?",
+      "code": "const point = 72;\nconst isPassed = point >= 60;",
+      "choices": {
+        "A": "boolean",
+        "B": "number",
+        "C": "true"
+      },
+      "answer": "A",
+      "wrongReasons": {
+        "B": "point가 number라서 결과도 number라고 생각했군요. 비교 연산자는 두 값을 비교한 결과를 돌려줄 뿐, 숫자를 계산하지 않습니다. 17강 isOldEnough 예제의 주석을 떠올려 보세요.",
+        "C": "const라서 값 자체로 좁혀진다고 생각했군요. 리터럴 타입은 값을 직접 적었을 때 붙어요. 비교식처럼 계산 결과를 담으면 그 결과가 될 수 있는 값 전체가 타입이 됩니다. 17강 isOldEnough 예제에 마우스를 올려 확인해 보세요."
+      },
+      "explanation": "비교 연산자의 결과는 항상 true 또는 false이므로 isPassed는 boolean으로 추론됩니다. const여도 비교식의 결과는 리터럴 타입 true로 좁혀지지 않아요."
+    },
+    {
+      "id": "s03-q3",
+      "lecture": "18강",
+      "topic": "else if 순서",
+      "question": "출력 결과로 올바른 것은?",
+      "code": "const temp = 35;\nif (temp > 20) { console.log(\"따뜻함\"); }\nelse if (temp > 30) { console.log(\"더움\"); }\nelse { console.log(\"추움\"); }",
+      "choices": {
+        "A": "더움",
+        "B": "따뜻함, 더움",
+        "C": "따뜻함"
+      },
+      "answer": "C",
+      "wrongReasons": {
+        "A": "35는 30보다 크니 \"더움\"이 맞아 보이지만, 조건은 위에서부터 차례로 확인합니다. 첫 번째 조건이 이미 참인지 먼저 따져 보세요. 18강 과제 1에서 조건 순서에 주의하라고 한 부분을 떠올려 보세요.",
+        "B": "두 조건이 모두 참인 것은 맞게 봤어요. 하지만 if-else if 사슬에서는 처음으로 참이 된 블록 하나만 실행하고 나머지는 확인하지 않습니다. 18강 과제 1의 too small, too big 예제를 떠올려 보세요."
+      },
+      "explanation": "조건은 위에서 아래로 확인하며, 처음 참이 된 temp > 20 블록만 실행됩니다. 그래서 temp > 30도 참이지만 확인조차 하지 않아요. else if를 쓸 때는 더 좁은 조건을 먼저 써야 합니다."
+    },
+    {
+      "id": "s03-q4",
+      "lecture": "18강",
+      "topic": "나머지 연산자",
+      "question": "출력 결과로 올바른 것은?",
+      "code": "const count = 17;\nconsole.log(count % 2, count % 5);",
+      "choices": {
+        "A": "1 2",
+        "B": "8 3",
+        "C": "1 3"
+      },
+      "answer": "A",
+      "wrongReasons": {
+        "B": "%를 나누기의 몫으로 생각했군요. %는 나누고 남은 나머지를 돌려줍니다. 18강 과제 2에서 test % 2 === 0으로 짝수를 판정한 이유를 떠올려 보세요.",
+        "C": "count % 2는 맞게 계산했지만 count % 5가 틀렸어요. 17을 5로 나누면 몫이 3이고, %가 돌려주는 것은 몫이 아니라 나머지입니다."
+      },
+      "explanation": "%는 나머지 연산자입니다. 17 ÷ 2는 몫 8, 나머지 1이고 17 ÷ 5는 몫 3, 나머지 2이므로 1 2가 출력됩니다."
+    },
+    {
+      "id": "s03-q5",
+      "lecture": "19강",
+      "topic": "truthy·falsy",
+      "question": "출력 결과로 올바른 것은?",
+      "code": "const a = \"0\";\nconst b = 0;\nif (a) { console.log(\"a 실행\"); }\nif (b) { console.log(\"b 실행\"); }",
+      "choices": {
+        "A": "b 실행",
+        "B": "a 실행",
+        "C": "a 실행, b 실행"
+      },
+      "answer": "B",
+      "wrongReasons": {
+        "A": "a와 b를 반대로 생각했어요. 문자열은 빈 문자열(\"\")일 때만 falsy이고, 안에 글자가 하나라도 있으면 truthy입니다. 그 글자가 \"0\"이어도 마찬가지예요. 19강 nameInput 예제에서 어떤 문자열이 false로 취급됐는지 떠올려 보세요.",
+        "C": "a는 맞게 봤지만 b가 틀렸어요. 숫자 0은 falsy 값이라 if 조건에서 false로 취급됩니다. 19강에서 정리한 falsy 값 목록을 떠올려 보세요."
+      },
+      "explanation": "\"0\"은 비어 있지 않은 문자열이라 truthy이고, 숫자 0은 falsy입니다. 그래서 a의 if 블록만 실행돼요. 이런 혼동을 피하려고 19강에서는 nameInput !== \"\"처럼 비교 연산자를 쓰라고 권장했습니다."
+    },
+    {
+      "id": "s03-q6",
+      "lecture": "20강",
+      "topic": "AND 연산자",
+      "question": "출력 결과로 올바른 것은?",
+      "code": "const age = 20;\nconst savings = 800_000;\nif (age >= 19 && savings >= 1_000_000) { console.log(\"가입 가능\"); }\nconsole.log(\"확인 끝\");",
+      "choices": {
+        "A": "가입 가능, 확인 끝",
+        "B": "가입 가능",
+        "C": "확인 끝"
+      },
+      "answer": "C",
+      "wrongReasons": {
+        "A": "age >= 19는 맞게 봤지만 &&는 양쪽이 모두 참이어야 참이 됩니다. savings 조건도 따져 보세요. 20강 대출 자격 예제에서 age와 income이 둘 다 기준을 넘어야 했던 것을 떠올려 보세요.",
+        "B": "마지막 줄의 console.log는 if 블록 밖에 있어서 조건과 상관없이 항상 실행됩니다. 그리고 &&는 양쪽이 모두 참이어야 참이에요."
+      },
+      "explanation": "savings가 1_000_000보다 작아 && 조건 전체가 거짓이므로 \"가입 가능\"은 출력되지 않습니다. if 블록 밖의 \"확인 끝\"만 출력돼요."
+    },
+    {
+      "id": "s03-q7",
+      "lecture": "20강",
+      "topic": "OR 연산자",
+      "question": "출력 결과로 올바른 것은?",
+      "code": "const hasCoupon = false;\nconst total = 52_000;\nconsole.log(hasCoupon || total >= 50_000, hasCoupon && total >= 50_000);",
+      "choices": {
+        "A": "false false",
+        "B": "true false",
+        "C": "true true"
+      },
+      "answer": "B",
+      "wrongReasons": {
+        "A": "hasCoupon이 false라서 ||도 거짓이라고 생각했군요. ||는 둘 중 하나만 참이어도 참입니다. 20강 score || attendance 예제를 떠올려 보세요.",
+        "C": "|| 쪽은 맞게 봤지만 && 쪽이 틀렸어요. &&는 양쪽이 모두 참이어야 참이고, hasCoupon이 false입니다."
+      },
+      "explanation": "total >= 50_000이 참이므로 ||의 결과는 true입니다. 반면 hasCoupon이 false라서 &&의 결과는 false예요."
+    },
+    {
+      "id": "s03-q8",
+      "lecture": "20강",
+      "topic": "조건 그룹화",
+      "question": "출력 결과를 순서대로 맞게 적은 것은?",
+      "code": "const x = 4, y = 9, z = 6;\nconsole.log((x > y && x > z) || (y > x && y > z));\nconsole.log((x > y || x > z) && y > z);",
+      "choices": {
+        "A": "true, false",
+        "B": "false, false",
+        "C": "true, true"
+      },
+      "answer": "A",
+      "wrongReasons": {
+        "B": "첫 줄에서 앞쪽 괄호가 거짓인 것은 맞게 봤어요. 하지만 ||는 뒤쪽 괄호만 참이어도 참입니다. 괄호 안을 먼저 계산한 뒤 ||로 합쳐 보세요. 20강 x, y, z 예제를 떠올려 보세요.",
+        "C": "첫 줄은 맞게 봤지만 둘째 줄이 틀렸어요. 괄호 안의 x > y || x > z를 먼저 계산해 보세요. 그 결과가 거짓이면 뒤에 무엇이 와도 &&는 거짓입니다."
+      },
+      "explanation": "첫 줄은 (거짓) || (참)이라 true입니다. 둘째 줄은 x가 y와 z보다 모두 작아 괄호 안이 거짓이므로 && 전체가 false예요. 괄호는 어떤 조건을 먼저 묶어 계산할지 정합니다."
+    },
+    {
+      "id": "s03-q9",
+      "lecture": "21강",
+      "topic": "배수 판정",
+      "question": "출력 결과로 올바른 것은?",
+      "code": "const a = 12, b = 20;\nconsole.log(a % 4 === 0 && a % 6 === 0, b % 4 === 0 && b % 6 === 0);",
+      "choices": {
+        "A": "true true",
+        "B": "false false",
+        "C": "true false"
+      },
+      "answer": "C",
+      "wrongReasons": {
+        "A": "a는 맞게 봤지만 b가 틀렸어요. 20은 4로 나누어떨어지지만 6으로 나누면 나머지가 남습니다. &&는 두 조건이 모두 참이어야 참이에요. 21강 과제 1의 num % 3 === 0 && num % 5 === 0 풀이를 떠올려 보세요.",
+        "B": "b는 맞게 봤지만 a가 틀렸어요. 12는 4로도, 6으로도 나머지 없이 나누어떨어집니다."
+      },
+      "explanation": "12는 4와 6 모두로 나누어떨어지므로 true입니다. 20은 6으로 나누면 나머지가 2라서 && 전체가 false예요."
+    },
+    {
+      "id": "s03-q10",
+      "lecture": "21강",
+      "topic": "문자열 비교",
+      "question": "출력 결과를 순서대로 맞게 적은 것은?",
+      "code": "let r1 = \"no\";\nlet r2 = \"Yes\";\nconsole.log(r1 === \"yes\" || r1 === \"no\");\nconsole.log(r2 === \"yes\" || r2 === \"no\");",
+      "choices": {
+        "A": "true, true",
+        "B": "true, false",
+        "C": "false, false"
+      },
+      "answer": "B",
+      "wrongReasons": {
+        "A": "r1은 맞게 봤지만 r2가 틀렸어요. ===는 문자열을 한 글자씩 정확히 비교하므로 대문자와 소문자를 다른 글자로 봅니다. 21강 과제 2의 word === \"yes\" 비교를 떠올려 보세요.",
+        "C": "r2는 맞게 봤지만 r1이 틀렸어요. ||는 여러 조건 중 하나만 참이어도 참입니다. r1 === \"no\"를 따져 보세요."
+      },
+      "explanation": "r1은 \"no\"와 같으므로 true입니다. r2의 \"Yes\"는 대문자 Y로 시작해 \"yes\"와 다른 문자열이므로 false예요. ===는 대소문자를 구분합니다."
+    },
+    {
+      "id": "s03-q11",
+      "lecture": "22강",
+      "topic": "컴파일 결과",
+      "question": "이 코드를 npx tsc로 컴파일한 JavaScript 파일에 대한 설명으로 올바른 것은?",
+      "code": "const price: number | undefined = 3000;\nif (price !== undefined) {\n  console.log(price.toFixed(0));\n}",
+      "choices": {
+        "A": "타입 주석과 const가 모두 그대로 남는다.",
+        "B": "타입 주석은 사라지고 const는 var로 바뀐다.",
+        "C": "타입 주석은 사라지고 const는 그대로 남는다."
+      },
+      "answer": "C",
+      "wrongReasons": {
+        "A": "const는 맞게 봤지만 타입 주석이 틀렸어요. 브라우저와 Node.js가 실행하는 것은 JavaScript이고, JavaScript에는 타입 주석 문법이 없습니다. 22강에서 컴파일한 script.js에 number | string | undefined가 남아 있었는지 떠올려 보세요.",
+        "B": "타입 주석은 맞게 봤지만 const가 틀렸어요. const를 var로 바꾸던 것은 예전 기본 target이 ES5였을 때 이야기입니다. 22강에서 컴파일한 script.js의 첫 줄을 떠올려 보세요."
+      },
+      "explanation": "컴파일하면 number | undefined 같은 타입 주석은 모두 사라집니다. 현재 TypeScript는 최신 ECMAScript를 기본 target으로 쓰므로 const는 var로 바뀌지 않고 그대로 남아요."
+    },
+    {
+      "id": "s03-q12",
+      "lecture": "23강",
+      "topic": "while 문",
+      "question": "출력 결과로 올바른 것은?",
+      "code": "let n = 1;\nwhile (n <= 3) { n++; }\nconsole.log(n);",
+      "choices": {
+        "A": "4",
+        "B": "3",
+        "C": "1, 2, 3"
+      },
+      "answer": "A",
+      "wrongReasons": {
+        "B": "n이 3일 때 멈춘다고 생각했군요. 조건은 본문을 실행하기 전에 확인합니다. n이 3일 때도 n <= 3은 참이라 본문이 한 번 더 실행돼요. 23강 while 예제에서 number가 몇일 때 반복이 끝났는지 떠올려 보세요.",
+        "C": "console.log가 while 블록 안에 있다고 생각했군요. 이 코드의 console.log는 반복이 끝난 뒤 한 번만 실행됩니다. 23강 예제에서 \"Finished\"가 몇 번 출력됐는지 떠올려 보세요."
+      },
+      "explanation": "n이 1, 2, 3일 때 본문이 실행되어 n은 4가 됩니다. 4 <= 3은 거짓이라 반복이 끝나고, 블록 밖의 console.log가 4를 한 번 출력해요."
+    },
+    {
+      "id": "s03-q13",
+      "lecture": "23강",
+      "topic": "continue·break",
+      "question": "출력 결과로 올바른 것은?",
+      "code": "let i = 0;\nwhile (i < 6) {\n  i++;\n  if (i === 2) continue;\n  if (i === 5) break;\n  console.log(i);\n}",
+      "choices": {
+        "A": "1, 3, 4, 5",
+        "B": "1, 3, 4",
+        "C": "1, 2, 3, 4"
+      },
+      "answer": "B",
+      "wrongReasons": {
+        "A": "continue는 맞게 봤지만 break가 틀렸어요. break를 만나면 그 자리에서 반복문 전체를 빠져나가므로 아래의 console.log도 실행되지 않습니다. 23강 예제에서 number === 4일 때 무슨 일이 일어났는지 떠올려 보세요.",
+        "C": "break는 맞게 봤지만 continue가 틀렸어요. continue는 이번 반복의 나머지를 건너뛰고 다음 반복으로 넘어갑니다. 23강 예제에서 짝수가 출력되지 않은 이유를 떠올려 보세요."
+      },
+      "explanation": "i가 2일 때는 continue로 출력을 건너뛰고, i가 5일 때는 break로 반복을 끝냅니다. 그래서 1, 3, 4만 출력돼요."
+    },
+    {
+      "id": "s03-q14",
+      "lecture": "24강",
+      "topic": "while 0회 실행",
+      "question": "이 코드에 대한 설명으로 올바른 것은?",
+      "code": "let tries = 5;\nwhile (tries < 3) {\n  tries++;\n}",
+      "choices": {
+        "A": "본문은 한 번도 실행되지 않고 tries는 5로 남는다.",
+        "B": "본문이 한 번 실행된 뒤 조건을 확인하므로 tries는 6이 된다.",
+        "C": "조건이 참이 될 때까지 반복하므로 본문이 끝없이 실행된다."
+      },
+      "answer": "A",
+      "wrongReasons": {
+        "B": "while을 do-while처럼 생각했군요. while은 본문을 실행하기 전에 조건부터 확인합니다. 24강에서 while (false)와 do-while (false)의 출력이 어떻게 달랐는지 떠올려 보세요.",
+        "C": "while을 \"조건이 참이 될 때까지\"로 읽었군요. while은 조건이 참인 동안에만 반복하고, 조건이 거짓이면 바로 멈춥니다. 24강 while (false) 예제를 떠올려 보세요."
+      },
+      "explanation": "while은 조건을 먼저 확인하는데, 처음부터 5 < 3이 거짓이라 본문이 한 번도 실행되지 않습니다. 그래서 tries는 5 그대로예요."
+    },
+    {
+      "id": "s03-q15",
+      "lecture": "24강",
+      "topic": "do-while",
+      "question": "출력 결과로 올바른 것은?",
+      "code": "let k = 10;\ndo {\n  console.log(k);\n  k++;\n} while (k < 5);",
+      "choices": {
+        "A": "출력 없음",
+        "B": "10, 11",
+        "C": "10"
+      },
+      "answer": "C",
+      "wrongReasons": {
+        "A": "처음부터 조건이 거짓이라 아무것도 출력되지 않는다고 생각했군요. do-while은 본문을 먼저 실행하고 나서 조건을 확인합니다. 24강의 do { ... } while (false) 예제를 떠올려 보세요.",
+        "B": "본문이 먼저 실행된다는 점은 맞게 봤어요. 하지만 첫 실행 뒤 k는 11이 되고, 11 < 5는 거짓이라 반복이 끝납니다."
+      },
+      "explanation": "do-while은 본문을 먼저 한 번 실행하므로 10이 출력됩니다. 그 뒤 k가 11이 되고 11 < 5가 거짓이라 반복이 끝나요."
+    },
+    {
+      "id": "s03-q16",
+      "lecture": "25강",
+      "topic": "누적 합",
+      "question": "출력 결과로 올바른 것은?",
+      "code": "let sum = 0;\nlet c = 1;\nwhile (c <= 4) { sum += c; c++; }\nconsole.log(sum);",
+      "choices": {
+        "A": "4",
+        "B": "6",
+        "C": "10"
+      },
+      "answer": "C",
+      "wrongReasons": {
+        "A": "sum += c를 sum = c처럼 생각했군요. +=는 기존 값에 더해서 다시 저장합니다. 25강 과제 1에서 sum에 1부터 100까지 쌓은 방법을 떠올려 보세요.",
+        "B": "누적은 맞게 했지만 마지막 반복을 빠뜨렸어요. 조건이 c <= 4라서 c가 4일 때도 본문이 실행됩니다."
+      },
+      "explanation": "c가 1, 2, 3, 4일 때 차례로 sum에 더해지므로 1 + 2 + 3 + 4 = 10입니다. +=는 기존 값에 더해서 다시 저장하는 연산자예요."
+    },
+    {
+      "id": "s03-q17",
+      "lecture": "25강",
+      "topic": "특정 값 제외",
+      "question": "출력 결과로 올바른 것은?",
+      "code": "let sum = 0;\nlet c = 1;\nwhile (c <= 5) {\n  if (c !== 3) { sum += c; }\n  c++;\n}\nconsole.log(sum);",
+      "choices": {
+        "A": "12",
+        "B": "3",
+        "C": "15"
+      },
+      "answer": "A",
+      "wrongReasons": {
+        "B": "!==를 ===처럼 읽었군요. !==는 \"같지 않으면\"이라는 뜻이라 3을 뺀 나머지 값이 더해집니다. 25강 과제 2의 counter !== 55 풀이를 떠올려 보세요.",
+        "C": "if 조건을 건너뛰고 모두 더했어요. c가 3일 때는 조건이 거짓이라 sum에 더해지지 않습니다."
+      },
+      "explanation": "c가 3이 아닐 때만 더하므로 1 + 2 + 4 + 5 = 12입니다. c++는 if 밖에 있어서 c가 3일 때도 실행되므로 반복은 정상적으로 이어져요."
+    },
+    {
+      "id": "s03-q18",
+      "lecture": "25강",
+      "topic": "후위 감소",
+      "question": "출력 결과로 올바른 것은?",
+      "code": "let c = 3;\nwhile (c >= 1) {\n  console.log(c--);\n}",
+      "choices": {
+        "A": "2, 1, 0",
+        "B": "3, 2, 1",
+        "C": "3, 2, 1, 0"
+      },
+      "answer": "B",
+      "wrongReasons": {
+        "A": "c--를 먼저 빼고 출력하는 것으로 생각했군요. 후위 감소는 현재 값을 먼저 돌려준 뒤 1을 뺍니다. 25강 과제 3의 console.log(counter--)를 떠올려 보세요.",
+        "C": "후위 감소는 맞게 봤지만 반복 횟수가 틀렸어요. c가 0이 되면 0 >= 1이 거짓이라 본문이 실행되지 않습니다."
+      },
+      "explanation": "c--는 현재 값을 먼저 출력한 뒤 1을 뺍니다. c가 3, 2, 1일 때 출력되고, 0이 되면 조건이 거짓이라 반복이 끝나요."
+    },
+    {
+      "id": "s03-q19",
+      "lecture": "26강",
+      "topic": "switch와 break",
+      "question": "출력 결과로 올바른 것은?",
+      "code": "let level = 2;\nswitch (level) {\n  case 1: console.log(\"초급\");\n  case 2: console.log(\"중급\");\n  case 3: console.log(\"고급\"); break;\n  default: console.log(\"미정\");\n}",
+      "choices": {
+        "A": "중급, 고급",
+        "B": "중급",
+        "C": "중급, 고급, 미정"
+      },
+      "answer": "A",
+      "wrongReasons": {
+        "B": "일치한 case만 실행된다고 생각했군요. case 2 뒤에 break가 없으면 다음 case의 코드까지 이어서 실행됩니다(fall-through). 26강 switch 예제에서 break를 넣은 이유를 떠올려 보세요.",
+        "C": "fall-through는 맞게 봤지만 끝까지 가지는 않아요. case 3의 break를 만나면 switch 전체를 빠져나가므로 default는 실행되지 않습니다."
+      },
+      "explanation": "level이 2라서 case 2부터 실행되는데, break가 없어 case 3의 코드까지 이어집니다. case 3의 break에서 switch를 빠져나가므로 \"중급\", \"고급\"이 출력돼요."
+    },
+    {
+      "id": "s03-q20",
+      "lecture": "27강",
+      "topic": "case 묶기",
+      "question": "출력 결과로 올바른 것은?",
+      "code": "let size = \"M\";\nswitch (size) {\n  case \"S\": console.log(\"작음\"); break;\n  case \"M\": case \"L\": console.log(\"보통\"); break;\n  default: console.log(\"모름\");\n}",
+      "choices": {
+        "A": "출력 없음",
+        "B": "모름",
+        "C": "보통"
+      },
+      "answer": "C",
+      "wrongReasons": {
+        "A": "case \"M\": 뒤에 코드가 없어서 아무것도 하지 않는다고 생각했군요. 코드가 없는 case는 아래 case의 코드로 이어집니다. 27강 과제 1의 case \"B\": case \"C\": case \"D\": 풀이를 떠올려 보세요.",
+        "B": "case \"M\":에 코드가 없어서 일치하지 않은 것으로 처리된다고 생각했군요. 값은 이미 case \"M\"과 일치했고, 이어지는 case \"L\"의 코드가 실행됩니다. 27강 과제 1의 성적 B 예제를 떠올려 보세요."
+      },
+      "explanation": "size가 \"M\"이라 case \"M\"에서 일치하고, 코드가 없으므로 이어지는 case \"L\"의 코드가 실행됩니다. 이렇게 case를 붙여 쓰면 여러 값을 한 번에 처리할 수 있어요."
+    },
+    {
+      "id": "s03-q21",
+      "lecture": "27강",
+      "topic": "switch 값 일치",
+      "question": "출력 결과로 올바른 것은?",
+      "code": "let day = \"sunday\";\nswitch (day) {\n  case \"Saturday\": case \"Sunday\": console.log(\"weekend\"); break;\n  default: console.log(\"invalid day\");\n}",
+      "choices": {
+        "A": "weekend",
+        "B": "invalid day",
+        "C": "weekend, invalid day"
+      },
+      "answer": "B",
+      "wrongReasons": {
+        "A": "switch는 값을 ===처럼 엄격하게 비교하므로 대문자와 소문자를 다른 글자로 봅니다. day의 첫 글자를 case 값과 비교해 보세요. 27강 과제 2의 dayOfWeek 예제를 떠올려 보세요.",
+        "C": "weekend 줄 끝에는 break가 있어서, 그 case가 실행됐다면 default까지 이어지지 않습니다. 그리고 day가 정말 case 값과 일치하는지도 다시 보세요."
+      },
+      "explanation": "switch는 ===처럼 엄격하게 비교하므로 \"sunday\"는 \"Sunday\"와 일치하지 않습니다. 일치하는 case가 없어 default가 실행돼요."
+    },
+    {
+      "id": "s03-q22",
+      "lecture": "28강",
+      "topic": "for 반복 횟수",
+      "question": "출력 결과로 올바른 것은?",
+      "code": "for (let i = 0; i < 3; i++) {\n  console.log(i);\n}",
+      "choices": {
+        "A": "0, 1, 2, 3",
+        "B": "0, 1, 2",
+        "C": "1, 2, 3"
+      },
+      "answer": "B",
+      "wrongReasons": {
+        "A": "<를 <=처럼 읽었군요. i가 3이면 3 < 3이 거짓이라 본문이 실행되지 않습니다. 28강 예제의 i <= 100과 비교해 보세요.",
+        "C": "i++가 본문보다 먼저 실행된다고 생각했군요. for 문은 조건 확인 → 본문 실행 → 증감식 순서로 진행됩니다. 그래서 첫 출력은 초깃값 그대로예요. 28강 for 예제의 첫 출력을 떠올려 보세요."
+      },
+      "explanation": "for 문은 조건 확인 → 본문 실행 → 증감식 순서로 돕니다. i가 0, 1, 2일 때 출력되고, 3이 되면 3 < 3이 거짓이라 끝나요."
+    },
+    {
+      "id": "s03-q23",
+      "lecture": "29강",
+      "topic": "for 누적 합",
+      "question": "출력 결과로 올바른 것은?",
+      "code": "let sum = 0;\nfor (let i = 0; i < 5; i++) {\n  sum += i;\n}\nconsole.log(sum);",
+      "choices": {
+        "A": "15",
+        "B": "5",
+        "C": "10"
+      },
+      "answer": "C",
+      "wrongReasons": {
+        "A": "1부터 5까지 더했다고 생각했군요. i는 0에서 시작하고 i < 5라서 5는 포함되지 않습니다. 29강 과제 1에서 i = 1, i <= 100으로 범위를 잡은 이유를 떠올려 보세요.",
+        "B": "반복 횟수를 센 것 같아요. 본문은 5번 실행되지만 sum에 더하는 값은 1이 아니라 그때의 i 값입니다."
+      },
+      "explanation": "i는 0, 1, 2, 3, 4 순서로 더해지므로 0 + 1 + 2 + 3 + 4 = 10입니다. 시작 값과 < 또는 <=를 잘못 고르면 범위가 한 칸 어긋나요."
+    },
+    {
+      "id": "s03-q24",
+      "lecture": "29강",
+      "topic": "증감식",
+      "question": "출력 결과로 올바른 것은?",
+      "code": "for (let i = 1; i <= 7; i += 2) {\n  console.log(i);\n}",
+      "choices": {
+        "A": "1, 3, 5, 7",
+        "B": "1, 3, 5",
+        "C": "2, 4, 6"
+      },
+      "answer": "A",
+      "wrongReasons": {
+        "B": "2씩 늘어나는 것은 맞게 봤지만 마지막 값을 빠뜨렸어요. 7 <= 7은 참이라 7일 때도 본문이 실행됩니다. 29강 과제 2의 i <= 100 조건을 떠올려 보세요.",
+        "C": "증감식이 먼저 실행된다고 생각했군요. 첫 반복은 초깃값 그대로 실행되고, i += 2는 본문이 끝난 뒤에 실행됩니다. 29강 과제 2에서 짝수만 더하려고 i를 2부터 시작한 이유를 떠올려 보세요."
+      },
+      "explanation": "i는 1부터 시작해 본문이 끝날 때마다 2씩 커집니다. 1, 3, 5, 7일 때 출력되고, 9가 되면 9 <= 7이 거짓이라 끝나요."
+    },
+    {
+      "id": "s03-q25",
+      "lecture": "29강",
+      "topic": "역순 반복",
+      "question": "출력 결과로 올바른 것은?",
+      "code": "for (let i = 3; i >= 0; i--) {\n  console.log(i);\n}",
+      "choices": {
+        "A": "3, 2, 1",
+        "B": "2, 1, 0",
+        "C": "3, 2, 1, 0"
+      },
+      "answer": "C",
+      "wrongReasons": {
+        "A": "조건을 i >= 1처럼 읽었군요. 이 코드의 조건은 i >= 0이라 i가 0일 때도 참입니다. 29강 과제 3의 i >= 1 조건과 비교해 보세요.",
+        "B": "끝은 맞게 봤지만 시작이 틀렸어요. i--는 본문이 끝난 뒤에 실행되므로 첫 출력은 초깃값 그대로입니다. 29강 과제 3에서 첫 출력이 무엇이었는지 떠올려 보세요."
+      },
+      "explanation": "i는 3에서 시작해 본문이 끝날 때마다 1씩 줄어듭니다. 조건이 i >= 0이라 0까지 출력되고, -1이 되면 끝나요."
+    },
+    {
+      "id": "s03-q26",
+      "lecture": "30강",
+      "topic": "if로 값 할당",
+      "question": "출력 결과로 올바른 것은?",
+      "code": "const age = 15;\nlet isAdult = false;\nif (age >= 18) { isAdult = true; }\nconsole.log(isAdult);",
+      "choices": {
+        "A": "true",
+        "B": "false",
+        "C": "undefined"
+      },
+      "answer": "B",
+      "wrongReasons": {
+        "A": "if 블록 안의 할당은 조건이 참일 때만 실행됩니다. age >= 18을 먼저 따져 보세요. 30강 isAdult 예제의 if 문을 떠올려 보세요.",
+        "C": "if 블록이 실행되지 않으면 값이 비어 있다고 생각했군요. isAdult는 선언할 때 이미 초깃값을 받았습니다. 30강 예제에서 let isAdult = false로 시작한 이유를 떠올려 보세요."
+      },
+      "explanation": "age가 15라서 if 조건이 거짓이므로 isAdult는 바뀌지 않습니다. 선언할 때 넣은 초깃값 false가 그대로 출력돼요."
+    },
+    {
+      "id": "s03-q27",
+      "lecture": "30강",
+      "topic": "삼항 연산자",
+      "question": "오류가 나는 줄과 그 이유로 올바른 것은?",
+      "code": "const stock = 3;\nconst label1 = stock > 0 ? \"재고 있음\" : \"품절\";\nconst label2 = stock > 0 ? \"재고 있음\";",
+      "choices": {
+        "A": "3번째 줄: 삼항 연산자에는 : 뒤의 값(else 부분)이 반드시 있어야 한다.",
+        "B": "2번째 줄: 삼항 연산자의 결과는 const 변수에 담을 수 없다.",
+        "C": "오류 없음: : 부분을 생략하면 조건이 거짓일 때 undefined가 된다."
+      },
+      "answer": "A",
+      "wrongReasons": {
+        "B": "삼항 연산자는 값을 돌려주는 식이라 const 변수에 바로 담을 수 있습니다. 30강에서 const isAdult2 = age !== null ? age >= 18 : false로 쓴 예제를 떠올려 보세요.",
+        "C": "if 문은 else를 생략할 수 있지만 삼항 연산자는 다릅니다. 30강에서 if 문과 삼항 연산자의 차이로 무엇을 강조했는지 떠올려 보세요."
+      },
+      "explanation": "삼항 연산자는 조건 ? 참일 때 값 : 거짓일 때 값 형태로 항상 두 값을 모두 적어야 합니다. 3번째 줄은 : 부분이 없어 문법 오류가 나요."
+    },
+    {
+      "id": "s03-q28",
+      "lecture": "31강",
+      "topic": "FizzBuzz 조건 순서",
+      "question": "출력 결과로 올바른 것은?",
+      "code": "const n = 15;\nif (n % 3 === 0) { console.log(\"fizz\"); }\nelse if (n % 5 === 0) { console.log(\"buzz\"); }\nelse if (n % 3 === 0 && n % 5 === 0) { console.log(\"fizzbuzz\"); }",
+      "choices": {
+        "A": "fizzbuzz",
+        "B": "fizz, buzz",
+        "C": "fizz"
+      },
+      "answer": "C",
+      "wrongReasons": {
+        "A": "15가 3과 5의 공배수라서 fizzbuzz라고 생각했군요. 하지만 조건은 위에서부터 확인하고, 처음 참이 된 블록 하나만 실행합니다. 31강 FizzBuzz 풀이에서 fizzbuzz 조건을 맨 위에 둔 이유를 떠올려 보세요.",
+        "B": "세 조건이 모두 참인 것은 맞게 봤어요. 하지만 else if 사슬에서는 처음 참이 된 블록만 실행하고 나머지는 확인하지 않습니다."
+      },
+      "explanation": "첫 조건 n % 3 === 0이 이미 참이라 \"fizz\"만 출력되고 나머지는 확인하지 않습니다. 그래서 31강 풀이처럼 가장 좁은 조건(3과 5의 공배수)을 맨 위에 둬야 해요."
+    },
+    {
+      "id": "s03-q29",
+      "lecture": "31강",
+      "topic": "중첩 삼항 연산자",
+      "question": "출력 결과로 올바른 것은?",
+      "code": "for (let i = 9; i <= 11; i++) {\n  console.log(i % 3 === 0 ? \"fizz\" : i % 5 === 0 ? \"buzz\" : i);\n}",
+      "choices": {
+        "A": "fizz, buzz, 11",
+        "B": "9, buzz, 11",
+        "C": "fizz, 10, 11"
+      },
+      "answer": "A",
+      "wrongReasons": {
+        "B": "10과 11은 맞게 봤지만 9가 틀렸어요. 첫 조건 i % 3 === 0을 9에 적용해 보세요. 31강 삼항 연산자 풀이를 떠올려 보세요.",
+        "C": "9와 11은 맞게 봤지만 10이 틀렸어요. 첫 조건이 거짓이면 : 뒤의 두 번째 삼항 연산자로 넘어가 i % 5 === 0을 확인합니다."
+      },
+      "explanation": "중첩 삼항 연산자는 앞 조건이 거짓일 때 : 뒤의 조건을 확인합니다. 9는 3의 배수라 fizz, 10은 5의 배수라 buzz, 11은 둘 다 아니라 숫자 그대로 출력돼요."
+    },
+    {
+      "id": "s03-q30",
+      "lecture": "32강",
+      "topic": "블록 스코프",
+      "question": "오류가 나는 줄과 그 이유로 올바른 것은?",
+      "code": "const total: number = 100;\n{\n  const bonus = 5;\n  console.log(total + bonus);\n}\nconsole.log(bonus);",
+      "choices": {
+        "A": "4번째 줄: 블록 안에서는 바깥의 total에 접근할 수 없다.",
+        "B": "6번째 줄: bonus는 블록 안에서 선언되어 블록 밖에서는 접근할 수 없다.",
+        "C": "4번째 줄과 6번째 줄: 블록 안팎에서 서로의 변수에 접근할 수 없다."
+      },
+      "answer": "B",
+      "wrongReasons": {
+        "A": "블록 안에서는 바깥 스코프의 변수에 접근할 수 있어요. 막히는 방향은 반대입니다. 32강 스코프 예제에서 블록 안의 console.log(x, y)가 어떻게 됐는지 떠올려 보세요.",
+        "C": "6번째 줄은 맞게 봤지만 4번째 줄은 정상입니다. 안쪽 블록은 바깥 변수에 접근할 수 있지만, 바깥은 안쪽 블록의 변수에 접근할 수 없어요. 32강 스코프 예제를 떠올려 보세요."
+      },
+      "explanation": "const로 블록 안에서 선언한 bonus는 그 블록 안에서만 쓸 수 있으므로 6번째 줄에서 오류가 납니다. 반대로 블록 안에서는 바깥의 total에 접근할 수 있어요."
+    }
+  ]
+}
