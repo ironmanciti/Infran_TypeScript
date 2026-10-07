@@ -18,13 +18,13 @@ description: TypeScript 강의 슬라이드에 맞는 표준 시연 코드(.demo
 | `append` | 기존 내용을 지우지 않고 아래에 덧붙임 (없으면 전체 교체) | |
 | `run` | 쓴 뒤 바로 실행해 결과를 보여 줌 | |
 
-- 키가 없으면 `node scripts/demo.mjs list`를 실행해 목록만 보여 주고 끝낸다.
+- 키가 없으면 `node .claude/skills/demo/scripts/demo.mjs list`를 실행해 목록만 보여 주고 끝낸다.
 - "다음", "next"라고만 하면 직전 보고의 `다음:` 키를 쓴다.
 
 ## 2. 코드 가져오기
 
 ```
-node scripts/demo.mjs show <키>
+node .claude/skills/demo/scripts/demo.mjs show <키>
 ```
 
 JSON이 출력된다. 실패하면(코드가 없는 슬라이드 등) 오류 메시지를 그대로 전하고 멈춘다.
@@ -38,9 +38,9 @@ JSON이 출력된다. 실패하면(코드가 없는 슬라이드 등) 오류 메
    - 주석 추가, 들여쓰기 변경, 개선, 설명 삽입 모두 하지 않는다.
 3. 원본과 같은지 확인한다.
    ```
-   node scripts/demo.mjs check <키> <파일> [--append]
+   node .claude/skills/demo/scripts/demo.mjs check <키> <파일> [--append]
    ```
-   `불일치`가 나오면 `node scripts/demo.mjs write <키> <파일> [--append]`로 다시 쓰고, 보고에 "스크립트로 다시 썼음"이라고 한 줄 적는다.
+   `불일치`가 나오면 `node .claude/skills/demo/scripts/demo.mjs write <키> <파일> [--append]`로 다시 쓰고, 보고에 "스크립트로 다시 썼음"이라고 한 줄 적는다.
 4. VS Code에서 파일을 연다: `code -r <파일>` (명령이 없거나 실패하면 무시).
 
 ## 4. 보고
@@ -71,6 +71,6 @@ JSON이 출력된다. 실패하면(코드가 없는 슬라이드 등) 오류 메
 
 ## 5. 하지 않는 것
 
-- `.demos/` 폴더의 원본 파일과 `scripts/demo.mjs`는 고치지 않는다.
+- `.demos/` 폴더의 원본 파일과 `.claude/skills/demo/scripts/demo.mjs`는 고치지 않는다.
 - points 외의 긴 설명을 덧붙이지 않는다. 설명은 강사가 한다.
 - 사용자가 요청하지 않으면 코드를 실행하지 않는다(`run` 인자 제외).

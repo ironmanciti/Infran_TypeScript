@@ -1,18 +1,18 @@
 // 강의 시연용 슬라이드 코드(.demos/sectionNN) 도구
 // 실행:
-//   node scripts/demo.mjs show 3-9            슬라이드 코드와 설명을 JSON으로 출력
-//   node scripts/demo.mjs write 3-9 [파일]    코드를 파일에 그대로 씀 (기본: playground/demo.ts)
-//   node scripts/demo.mjs check 3-9 [파일]    파일 내용이 원본 코드와 같은지 확인
+//   node .claude/skills/demo/scripts/demo.mjs show 3-9            슬라이드 코드와 설명을 JSON으로 출력
+//   node .claude/skills/demo/scripts/demo.mjs write 3-9 [파일]    코드를 파일에 그대로 씀 (기본: playground/demo.ts)
+//   node .claude/skills/demo/scripts/demo.mjs check 3-9 [파일]    파일 내용이 원본 코드와 같은지 확인
 //     write, check 뒤에 --append를 붙이면 기존 내용 아래에 덧붙이는 방식으로 동작
-//   node scripts/demo.mjs verify [03]         모든 데모 코드를 타입 검사하고 실행해 예상 출력과 비교
-//   node scripts/demo.mjs list [03]           데모가 있는 슬라이드 목록
+//   node .claude/skills/demo/scripts/demo.mjs verify [03]         모든 데모 코드를 타입 검사하고 실행해 예상 출력과 비교
+//   node .claude/skills/demo/scripts/demo.mjs list [03]           데모가 있는 슬라이드 목록
 import { existsSync, mkdirSync, mkdtempSync, readFileSync, readdirSync, rmSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { dirname, join, relative, resolve } from "node:path";
 import { spawnSync } from "node:child_process";
 import { pathToFileURL } from "node:url";
 
-export const ROOT = join(import.meta.dirname, "..");
+export const ROOT = join(import.meta.dirname, "..", "..", "..", "..");
 export const DEMO_DIR = join(ROOT, ".demos");
 export const DEFAULT_TARGET = "playground/demo.ts";
 const HANJA = /[㐀-䶿一-鿿豈-﫿]/;
@@ -262,7 +262,7 @@ function main(argv) {
       }
       return 0;
     }
-    console.error("사용법: node scripts/demo.mjs show|write|check|verify|list ...");
+    console.error("사용법: node .claude/skills/demo/scripts/demo.mjs show|write|check|verify|list ...");
     return 1;
   } catch (e) {
     console.error(e.message);

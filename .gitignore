@@ -16,9 +16,6 @@ playground/
 # 강의 영상 제작 작업 폴더 (음성·영상·파이썬 런타임, 약 1GB)
 slide_video/
 
-# 예전 강의 원고 (ppt_docs의 -수정 파일로 대체됨)
-ppt_docs/old/
-
 # Office 임시 잠금 파일
 ~$*
 
@@ -43,4 +40,9 @@ desktop.ini
 # 강사용 스킬 (수강생에게 배포하지 않음)
 .claude/skills/codeimage/
 .claude/skills/quiz-author/
-.agents/skills/quiz-author/
+
+# 수강생별 퀴즈 진행 상황 (quiz 스킬 이어 풀기)
+.quiz-progress/
+
+# 강사용 테스트 (문제 파일·시연 코드 확인용, 수강생에게 배포하지 않음)
+tests/
