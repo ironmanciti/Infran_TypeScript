@@ -13,7 +13,8 @@ import { spawnSync } from "node:child_process";
 import { pathToFileURL } from "node:url";
 
 export const ROOT = join(import.meta.dirname, "..", "..", "..", "..");
-export const DEMO_DIR = join(ROOT, ".demos");
+// 테스트에서는 환경 변수 DEMO_DIR로 다른 폴더를 쓸 수 있습니다.
+export const DEMO_DIR = process.env.DEMO_DIR ? resolve(process.env.DEMO_DIR) : join(ROOT, ".demos");
 export const DEFAULT_TARGET = "playground/demo.ts";
 const HANJA = /[㐀-䶿一-鿿豈-﫿]/;
 const TSC = join(ROOT, "node_modules", "typescript", "bin", "tsc");
@@ -147,13 +148,16 @@ export function validateManifest(manifest, section) {
       if (p.expectErrors !== undefined && (!Array.isArray(p.expectErrors) || !p.expectErrors.every((c) => /^TS\d+$/.test(c)))) {
         errors.push(`${where}: expectErrors는 ["TS1234"] 형식이어야 함`);
       }
+      // source: 슬라이드의 코드 블록을 옮겼으면 "slide"(기본), 표·문장을 코드로 옮겼으면 "table"
+      if (p.source !== undefined && !["slide", "table"].includes(p.source)) {
+        errors.push(`${where}: source는 "slide" 또는 "table"이어야 함`);
+      }
     }
   }
   return errors;
 }
 
-// 여러 .ts 파일을 한 번에 타입 검사하고 { 파일 경로: [오류 코드] }를 돌려줍니다.
-export function typeCheck(files) {
+function runTsc(files) {
   const r = spawnSync(process.execPath, [
     TSC, "--noEmit", "--ignoreConfig", "--strict", "--target", "esnext",
     "--module", "nodenext", "--moduleDetection", "force", "--pretty", "false", ...files,
@@ -162,6 +166,22 @@ export function typeCheck(files) {
   for (const line of (r.stdout + r.stderr).split(/\r?\n/)) {
     const m = line.match(/^(.+?)\(\d+,\d+\): error (TS\d+)/);
     if (m) (result[resolve(ROOT, m[1])] ??= []).push(m[2]);
+  }
+  return result;
+}
+
+// 여러 .ts 파일을 한 번에 타입 검사하고 { 파일 경로: [오류 코드] }를 돌려줍니다.
+// tsc는 문법 오류(TS1xxx)가 하나라도 있으면 다른 파일의 타입 오류를 보고하지 않으므로,
+// 문법 오류가 난 파일을 빼고 나머지를 다시 검사합니다.
+export function typeCheck(files) {
+  const result = {};
+  let rest = files;
+  while (rest.length) {
+    const round = runTsc(rest);
+    const broken = Object.keys(round).filter((f) => round[f].some((c) => /^TS1\d{3}$/.test(c)));
+    for (const f of broken) result[f] = round[f];
+    if (broken.length === 0) return { ...result, ...round };
+    rest = rest.filter((f) => !broken.includes(resolve(f)));
   }
   return result;
 }
@@ -270,6 +290,6 @@ function main(argv) {
   }
 }
 
-if (import.meta.url === pathToFileURL(process.argv[1]).href) {
+if (process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href) {
   process.exitCode = main(process.argv.slice(2));
 }
