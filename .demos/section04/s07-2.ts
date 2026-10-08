@@ -1,11 +1,3 @@
-// void
-function logMessage(): void {
-  console.log("Hello");
-}
-
-console.log(logMessage());  // undefined
-
-// number | undefined
 function double(a: number): number | undefined {
   if (a === 0) return undefined;
   return a * 2;

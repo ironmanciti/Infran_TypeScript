@@ -1,0 +1,286 @@
+{
+  "section": "04",
+  "title": "Section 4. 함수와 타입",
+  "version": "1.0.0",
+  "source": "Section04_FunctionsAndTypes.pptx",
+  "slides": {
+    "4": {
+      "lecture": "29강",
+      "title": "함수의 구조",
+      "combine": true,
+      "parts": [{ "label": "script.ts", "file": "s04-1.ts" }],
+      "points": [
+        "function 뒤에 함수 이름(카멜 케이스), 괄호 안에 매개변수, 콜론 뒤에 반환 타입을 씁니다.",
+        "중괄호 안이 본문이며 return으로 결과를 반환합니다.",
+        "매개변수는 함수 정의에 선언한 변수이고, 인자는 호출할 때 전달하는 값입니다."
+      ]
+    },
+    "5": {
+      "lecture": "29강",
+      "title": "함수의 참조와 호출",
+      "combine": true,
+      "parts": [
+        {
+          "label": "script.ts",
+          "file": "s05-1.ts",
+          "expectErrors": ["TS2554"],
+          "note": "addNumbers(2) 줄은 TypeScript 오류가 나지만 실행은 되고 NaN이 출력됩니다."
+        }
+      ],
+      "points": [
+        "이름만 쓰면 함수를 참조할 뿐이고, 괄호를 붙여야 호출됩니다.",
+        "인자는 순서대로 매개변수에 대응됩니다.",
+        "Node.js는 타입 정보를 지우고 실행하므로 타입 오류가 있어도 코드는 실행됩니다."
+      ]
+    },
+    "6": {
+      "lecture": "29강",
+      "title": "반환 타입",
+      "combine": true,
+      "parts": [
+        {
+          "label": "return 문을 지운 경우",
+          "file": "s06-1.ts",
+          "expectErrors": ["TS2355"],
+          "note": "일부러 오류를 보여 주는 코드입니다. 출력은 없습니다."
+        }
+      ],
+      "points": [
+        "반환 타입을 지정하면 함수가 항상 그 타입의 값을 반환해야 합니다.",
+        "void는 아무것도 반환하지 않는 함수, undefined는 명시적으로 undefined를 반환하는 함수에 씁니다.",
+        "any는 타입 검사를 하지 않으므로 사용하지 않습니다."
+      ]
+    },
+    "7": {
+      "lecture": "29강",
+      "title": "void와 undefined",
+      "combine": true,
+      "parts": [
+        { "label": "void", "file": "s07-1.ts" },
+        { "label": "number | undefined", "file": "s07-2.ts" }
+      ],
+      "points": [
+        "반환값이 없는 함수를 호출한 결과는 undefined입니다.",
+        "값으로서 undefined를 반환할 수 있으면 number | undefined 같은 유니언 타입을 씁니다.",
+        "반환값이 없는 함수에는 void를 사용합니다."
+      ]
+    },
+    "9": {
+      "lecture": "30강",
+      "title": "중첩 if 문과 가드 절",
+      "combine": false,
+      "parts": [
+        { "label": "중첩 if 문", "file": "s09-1.ts" },
+        { "label": "가드 절", "file": "s09-2.ts" }
+      ],
+      "points": [
+        "가드 절은 유효하지 않은 경우를 먼저 확인하고 바로 return합니다.",
+        "return은 즉시 함수를 종료하므로 else가 필요 없습니다.",
+        "return;은 return undefined;와 같습니다."
+      ]
+    },
+    "10": {
+      "lecture": "30강",
+      "title": "실행 결과",
+      "combine": true,
+      "parts": [{ "label": "호출 결과 표", "file": "s10-1.ts", "source": "table" }],
+      "points": [
+        "a와 b가 같으면 0을 반환합니다.",
+        "a가 b보다 작거나 음수가 있으면 가드 절에 걸려 undefined를 반환합니다."
+      ]
+    },
+    "11": {
+      "lecture": "30강",
+      "title": "가드 절과 타입 좁히기",
+      "combine": false,
+      "parts": [
+        {
+          "label": "가드 절 없음",
+          "file": "s11-1.ts",
+          "expectErrors": ["TS18048"],
+          "note": "일부러 오류를 보여 주는 코드입니다. 출력은 없습니다."
+        },
+        { "label": "가드 절 사용", "file": "s11-2.ts" }
+      ],
+      "points": [
+        "text가 undefined일 수 있으면 text.length에서 오류가 납니다.",
+        "가드 절을 통과한 다음 줄부터 TypeScript는 text를 string으로 판단합니다(타입 좁히기).",
+        "undefined를 전달하면 가드 절에 걸려 아무것도 출력되지 않습니다."
+      ]
+    },
+    "12": {
+      "lecture": "30강",
+      "title": "런타임 타입 검사",
+      "combine": true,
+      "parts": [
+        { "label": "typeof 연산자", "file": "s12-1.ts", "source": "table" },
+        {
+          "label": "typeof 가드",
+          "file": "s12-2.ts",
+          "expectErrors": ["TS2345"],
+          "note": "\"8\"을 전달한 줄은 TypeScript 오류가 나지만 실행은 되고 typeof 가드에 걸립니다."
+        }
+      ],
+      "points": [
+        "typeof는 값의 타입을 문자열로 반환합니다.",
+        "타입 주석은 실행 시점에 사라지지만 typeof 검사는 JavaScript 코드이므로 남습니다.",
+        "외부에서 들어오는 데이터는 실행 시점에 반드시 검증해야 합니다."
+      ]
+    },
+    "15": {
+      "lecture": "32강",
+      "title": "익명 함수",
+      "combine": true,
+      "parts": [
+        { "label": "변수에 함수 참조 저장", "file": "s15-1.ts" },
+        {
+          "label": "익명 함수",
+          "file": "s15-2.ts",
+          "expectErrors": ["TS2322"],
+          "note": "z = 5 줄은 TypeScript 오류가 나지만 실행은 됩니다."
+        }
+      ],
+      "points": [
+        "함수도 값이므로 변수에 할당할 수 있습니다.",
+        "괄호 없이 const y = x로 쓰면 함수 참조를 저장합니다.",
+        "변수에 할당하는 이름 없는 함수를 익명 함수라고 합니다."
+      ]
+    },
+    "17": {
+      "lecture": "33강",
+      "title": "화살표 함수",
+      "combine": false,
+      "parts": [
+        { "label": "중괄호 본문", "file": "s17-1.ts" },
+        { "label": "한 줄 본문", "file": "s17-2.ts" }
+      ],
+      "points": [
+        "function 키워드 대신 =>를 사용합니다.",
+        "매개변수 타입과 반환 타입은 일반 함수와 같은 방식으로 지정합니다.",
+        "본문이 한 줄이면 중괄호를 생략할 수 있습니다."
+      ]
+    },
+    "18": {
+      "lecture": "33강",
+      "title": "암시적 반환",
+      "combine": false,
+      "parts": [
+        { "label": "return 없이 반환", "file": "s18-1.ts" },
+        {
+          "label": "return을 쓰면 오류",
+          "file": "s18-2.ts",
+          "expectErrors": ["TS1005"],
+          "note": "문법 오류라 실행되지 않습니다."
+        }
+      ],
+      "points": [
+        "중괄호가 없는 화살표 함수는 표현식의 값을 그대로 반환합니다(암시적 반환).",
+        "중괄호 없이 return을 쓰면 문법 오류가 납니다.",
+        "값을 만드는 표현식이면 무엇이든 반환할 수 있습니다."
+      ]
+    },
+    "19": {
+      "lecture": "33강",
+      "title": "익명 함수와 화살표 함수 비교",
+      "combine": true,
+      "parts": [{ "label": "같은 기능 비교", "file": "s19-1.ts", "source": "table" }],
+      "points": [
+        "익명 함수는 function () { }, 화살표 함수는 () => { }로 씁니다.",
+        "화살표 함수는 짧고, 한 줄이면 return을 생략할 수 있습니다.",
+        "최근 코드는 대부분 화살표 함수를 사용합니다."
+      ]
+    },
+    "21": {
+      "lecture": "34강",
+      "title": "함수 타입 표기",
+      "combine": true,
+      "parts": [{ "label": "script.ts", "file": "s21-1.ts" }],
+      "points": [
+        "함수 타입은 (매개변수: 타입) => 반환 타입으로 씁니다.",
+        "함수 타입에서는 반환 타입 앞에 콜론 대신 =>를 씁니다.",
+        "변수에 함수 타입을 지정하면 함수 쪽의 매개변수 타입과 반환 타입은 추론됩니다."
+      ]
+    },
+    "22": {
+      "lecture": "34강",
+      "title": "타입 불일치",
+      "combine": true,
+      "parts": [
+        {
+          "label": "a의 타입을 string으로 바꾼 경우",
+          "file": "s22-1.ts",
+          "expectErrors": ["TS2322"],
+          "note": "일부러 오류를 보여 주는 코드입니다. 출력은 없습니다."
+        }
+      ],
+      "points": [
+        "할당하는 함수가 지정한 함수 타입과 맞지 않으면 오류가 납니다.",
+        "함수 타입은 함수를 반환하는 함수와 콜백 함수에서 강력한 도구가 됩니다."
+      ]
+    },
+    "25": {
+      "lecture": "36강",
+      "title": "함수를 반환하는 함수",
+      "combine": true,
+      "parts": [{ "label": "script.ts", "file": "s25-1.ts" }],
+      "points": [
+        "함수는 값이므로 다른 함수의 반환값이 될 수 있습니다.",
+        "() => void는 void를 반환하는 함수를 반환한다는 뜻입니다.",
+        "연속 호출보다 의미 있는 이름의 변수에 저장하는 편이 읽기 쉽습니다."
+      ]
+    },
+    "26": {
+      "lecture": "36강",
+      "title": "타입 별칭",
+      "combine": true,
+      "parts": [{ "label": "script.ts", "file": "s26-1.ts" }],
+      "points": [
+        "type 키워드로 타입에 이름을 붙이며, 컴파일하면 사라집니다.",
+        "기본 제공되지 않는 사용자 정의 타입을 만들 때 사용합니다.",
+        "타입 별칭은 파스칼 케이스, 변수는 카멜 케이스로 짓습니다."
+      ]
+    },
+    "28": {
+      "lecture": "37강",
+      "title": "즉시 실행 함수 표현식",
+      "combine": true,
+      "parts": [{ "label": "IIFE", "file": "s28-1.ts" }],
+      "points": [
+        "함수를 괄호로 감싸 표현식으로 만든 뒤 ()를 붙여 바로 호출합니다.",
+        "변수에는 함수가 아니라 반환값이 저장됩니다.",
+        "IIFE 앞 문장의 세미콜론을 반드시 붙이십시오."
+      ]
+    },
+    "29": {
+      "lecture": "37강",
+      "title": "화살표 함수와 IIFE",
+      "combine": true,
+      "parts": [{ "label": "script.ts", "file": "s29-1.ts" }],
+      "points": [
+        "화살표 함수도 IIFE로 사용할 수 있고, 매개변수와 반환 타입도 지정할 수 있습니다.",
+        "지금은 ES 모듈이 스코프를 분리하므로 주로 이전 코드나 라이브러리에서 볼 수 있습니다."
+      ]
+    },
+    "31": {
+      "lecture": "38강",
+      "title": "콜백 함수",
+      "combine": true,
+      "parts": [{ "label": "script.ts", "file": "s31-1.ts" }],
+      "points": [
+        "콜백 함수는 다른 함수의 인자로 전달되어 그 안에서 호출되는 함수입니다.",
+        "콜백의 타입을 타입 별칭으로 정의하면 시그니처만 맞는 어떤 함수든 전달할 수 있습니다.",
+        "비교식 자체가 boolean이므로 callback(a, b) > 10을 바로 반환합니다."
+      ]
+    },
+    "32": {
+      "lecture": "38강",
+      "title": "익명 함수와 이름 있는 함수 전달",
+      "combine": true,
+      "parts": [{ "label": "script.ts", "file": "s32-1.ts" }],
+      "points": [
+        "익명 함수로 전달하면 호출하는 곳에서 로직을 바로 확인할 수 있습니다.",
+        "이름 있는 함수는 로직이 분리되므로 동작을 보려면 함수 정의로 이동해야 합니다."
+      ]
+    }
+  }
+}

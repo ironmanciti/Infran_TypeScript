@@ -42,5 +42,5 @@
     "skipLibCheck": true,
   },
   // 강의 실습 파일만 컴파일한다 (playground의 시연 코드는 제외)
-  "include": ["script.ts"]
+  "include": ["script.ts", "playground/**/*.ts"]
 }
