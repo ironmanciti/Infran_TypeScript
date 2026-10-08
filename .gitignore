@@ -43,3 +43,6 @@ desktop.ini
 
 # 강사용 테스트 (문제 파일·시연 코드 확인용, 수강생에게 배포하지 않음)
 tests/
+
+# Claude Code 강사용 프로젝트 지침 (수강생에게 배포하지 않음)
+CLAUDE.local.md
