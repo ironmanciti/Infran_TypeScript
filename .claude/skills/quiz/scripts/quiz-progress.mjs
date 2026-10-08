@@ -1,10 +1,10 @@
 // 퀴즈 진행 상황 저장 도구 (quiz 스킬이 중단한 곳부터 이어서 풀 때 사용)
 // 실행:
 //   node .claude/skills/quiz/scripts/quiz-progress.mjs show 3                                  저장된 진행 상황을 JSON으로 출력
-//   node .claude/skills/quiz/scripts/quiz-progress.mjs save 3 --next 13 --attempt 0 --results O,O,R,X   진행 상황 저장
+//   node .claude/skills/quiz/scripts/quiz-progress.mjs save 3 --next 13 --attempt 0 --results O,O,R,X,P   진행 상황 저장
 //   node .claude/skills/quiz/scripts/quiz-progress.mjs clear 3                                 진행 상황 삭제
 //
-// results 기호: O = 첫 시도에 정답, R = 두 번째 시도에 정답, X = 두 번 틀림
+// results 기호: O = 첫 시도에 정답, R = 두 번째 시도에 정답, X = 두 번 틀림, P = 풀지 않고 통과
 // next: 지금 풀 문제의 순번(0부터). attempt: 그 문제에서 이미 틀린 횟수(0 또는 1)
 import { existsSync, mkdirSync, readFileSync, rmSync, writeFileSync } from "node:fs";
 import { join } from "node:path";
@@ -13,7 +13,7 @@ import { pathToFileURL } from "node:url";
 export const ROOT = join(import.meta.dirname, "..", "..", "..", "..");
 export const PROGRESS_DIR = join(ROOT, ".quiz-progress");
 export const QUIZ_DIR = join(ROOT, "quizzes");
-export const RESULT_CODES = ["O", "R", "X"];
+export const RESULT_CODES = ["O", "R", "X", "P"];
 
 // "3", "03", "섹션 3" 같은 입력을 "03"으로 바꿉니다.
 export function normalizeSection(input) {
@@ -49,6 +49,7 @@ export function loadProgress(input, { dir = PROGRESS_DIR, quizDir = QUIZ_DIR } =
     results,
     correct: results.filter((r) => r === "O" || r === "R").length,
     wrong: results.filter((r) => r === "X").length,
+    passed: results.filter((r) => r === "P").length,
     updated: saved.updated,
   };
 }
@@ -62,7 +63,7 @@ export function saveProgress(input, { next, attempt, results }, { dir = PROGRESS
   if (attempt !== 0 && attempt !== 1) throw new Error(`attempt는 0 또는 1이어야 함: ${attempt}`);
   if (!Array.isArray(results) || results.length !== next) throw new Error(`results 개수(${results?.length})가 next(${next})와 같아야 함`);
   const bad = results.filter((r) => !RESULT_CODES.includes(r));
-  if (bad.length > 0) throw new Error(`results 기호는 O, R, X만 쓸 수 있음: ${bad.join(", ")}`);
+  if (bad.length > 0) throw new Error(`results 기호는 O, R, X, P만 쓸 수 있음: ${bad.join(", ")}`);
 
   mkdirSync(dir, { recursive: true });
   const data = { section, version: quiz.version, next, attempt, results, updated: new Date().toISOString() };
@@ -95,7 +96,7 @@ function main([command, section, ...rest]) {
     if (command === "show") out = loadProgress(section);
     else if (command === "save") out = saveProgress(section, parseSaveArgs(rest));
     else if (command === "clear") out = clearProgress(section);
-    else throw new Error("사용법: node .claude/skills/quiz/scripts/quiz-progress.mjs show|save|clear <섹션> [--next N --attempt 0|1 --results O,R,X]");
+    else throw new Error("사용법: node .claude/skills/quiz/scripts/quiz-progress.mjs show|save|clear <섹션> [--next N --attempt 0|1 --results O,R,X,P]");
     console.log(JSON.stringify(out));
   } catch (e) {
     console.error(e.message);
