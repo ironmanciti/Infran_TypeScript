@@ -20,30 +20,21 @@ description: TypeScript 강의 슬라이드에 맞는 표준 시연 코드(.demo
 
 - 키가 없으면 `node .claude/skills/demo/scripts/demo.mjs list`를 실행해 목록만 보여 주고 끝낸다.
 - `/demo list [섹션]` (예: `/demo list 2`, "섹션 2 데모 목록")이면 `node .claude/skills/demo/scripts/demo.mjs list <섹션>`을 실행해 그 섹션의 목록만 보여 주고 끝낸다. 섹션이 없으면 전체 목록이다.
-- `/demo next`, `/demo 다음`, 또는 "다음", "next"라고만 하면 키 자리에 `next`를 그대로 넘긴다(`show next`). 스크립트가 마지막으로 보여 준 슬라이드(`playground/.demo-last`)의 다음 슬라이드를 찾아 준다. 이후 `check`·`write`에는 JSON의 `key`를 쓴다.
+- `/demo next`, `/demo 다음`, 또는 "다음", "next"라고만 하면 키 자리에 `next`를 그대로 넘긴다(`show next`). 스크립트가 마지막으로 보여 준 슬라이드(`playground/.demo-last`)의 다음 슬라이드를 찾아 준다.
 - `/demo 설명 [키] [파일]`, "설명 읽어줘", "설명해줘"이면 코드를 쓰지 않고 **6. 설명 읽어 주기**만 한다.
 
-## 2. 코드 가져오기
+## 2·3. 코드 가져와 파일에 쓰기 (명령 한 번)
+
+빠르게 처리하려고 **PowerShell 명령 한 번**으로 가져오기·쓰기·열기를 모두 한다. 원본 파일을 스크립트가 그대로 복사하므로 Read·Write 도구와 `check`는 쓰지 않는다.
 
 ```
-node .claude/skills/demo/scripts/demo.mjs show <키>
+$j = node .claude/skills/demo/scripts/demo.mjs show <키> | Out-String; if ($LASTEXITCODE -ne 0) { $j; exit 1 }; $d = $j | ConvertFrom-Json; node .claude/skills/demo/scripts/demo.mjs write $d.key <파일> [--append]; code -r <파일>; $j
 ```
 
-JSON이 출력된다. 실패하면(코드가 없는 슬라이드 등) 오류 메시지를 그대로 전하고 멈춘다.
-
-## 3. 파일에 쓰기
-
-1. 대상 파일이 있으면 먼저 읽는다.
-2. JSON의 `code`를 **한 글자도 바꾸지 않고** 쓴다.
-   - 교체: Write 도구로 파일 전체를 `code`로 쓴다.
-   - append: 기존 내용 끝에 빈 줄 하나를 두고 `code`를 덧붙인다.
-   - 주석 추가, 들여쓰기 변경, 개선, 설명 삽입 모두 하지 않는다.
-3. 원본과 같은지 확인한다.
-   ```
-   node .claude/skills/demo/scripts/demo.mjs check <키> <파일> [--append]
-   ```
-   `불일치`가 나오면 `node .claude/skills/demo/scripts/demo.mjs write <키> <파일> [--append]`로 다시 쓰고, 보고에 "스크립트로 다시 썼음"이라고 한 줄 적는다.
-4. VS Code에서 파일을 연다: `code -r <파일>` (명령이 없거나 실패하면 무시).
+- `<키>`에는 사용자가 준 키나 `next`를 그대로 넣는다. `<파일>`이 없으면 `playground/demo.ts`.
+- 출력의 JSON으로 4의 보고를 쓴다. 실패하면(코드가 없는 슬라이드 등) 오류 메시지를 그대로 전하고 멈춘다.
+- `code -r`이 없거나 실패해도 무시한다.
+- 코드를 직접 옮겨 적거나 고치지 않는다(주석 추가, 들여쓰기 변경, 개선 모두 금지).
 
 ## 4. 보고
 
