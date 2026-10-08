@@ -1,6 +1,8 @@
 // 강의 시연용 슬라이드 코드(.demos/sectionNN) 도구
 // 실행:
 //   node .claude/skills/demo/scripts/demo.mjs show 3-9            슬라이드 코드와 설명을 JSON으로 출력
+//     키 대신 섹션 번호만 주면(예: show 3) 그 섹션의 첫 슬라이드를 씀
+//     키 대신 next(또는 다음)를 주면 마지막으로 보여 준 슬라이드의 다음 슬라이드를 씀
 //   node .claude/skills/demo/scripts/demo.mjs write 3-9 [파일]    코드를 파일에 그대로 씀 (기본: playground/demo.ts)
 //   node .claude/skills/demo/scripts/demo.mjs check 3-9 [파일]    파일 내용이 원본 코드와 같은지 확인
 //     write, check 뒤에 --append를 붙이면 기존 내용 아래에 덧붙이는 방식으로 동작
@@ -16,6 +18,8 @@ export const ROOT = join(import.meta.dirname, "..", "..", "..", "..");
 // 테스트에서는 환경 변수 DEMO_DIR로 다른 폴더를 쓸 수 있습니다.
 export const DEMO_DIR = process.env.DEMO_DIR ? resolve(process.env.DEMO_DIR) : join(ROOT, ".demos");
 export const DEFAULT_TARGET = "playground/demo.ts";
+// 마지막으로 보여 준 키를 기억하는 파일 (테스트에서는 DEMO_STATE로 바꿀 수 있음)
+export const STATE_FILE = process.env.DEMO_STATE ? resolve(process.env.DEMO_STATE) : join(ROOT, "playground", ".demo-last");
 const HANJA = /[㐀-䶿一-鿿豈-﫿]/;
 const TSC = join(ROOT, "node_modules", "typescript", "bin", "tsc");
 
@@ -59,9 +63,19 @@ function joinParts(section, parts) {
   return parts.map((p) => `// ${p.label}\n${readPart(section, p)}`).join("\n");
 }
 
+// 섹션 번호만 받으면("2", "02") 그 섹션의 첫 슬라이드 키를 돌려줍니다.
+export function expandKey(key) {
+  const m = String(key).trim().match(/^(\d{1,2})$/);
+  if (!m) return key;
+  const section = pad(m[1]);
+  const first = slideNumbers(loadManifest(section))[0];
+  if (first === undefined) throw new Error(`섹션 ${Number(section)}에 시연 코드가 없음`);
+  return `${Number(section)}-${first}`;
+}
+
 // 키에 해당하는 시연 코드와 설명을 돌려줍니다.
 export function resolveDemo(key) {
-  const { section, slide, part } = parseKey(key);
+  const { section, slide, part } = parseKey(expandKey(key));
   const manifest = loadManifest(section);
   const s = manifest.slides[slide];
   const sn = Number(section);
@@ -94,6 +108,22 @@ export function resolveDemo(key) {
     points: s.points,
     next,
   };
+}
+
+export const isNextWord = (key) => ["next", "다음"].includes(String(key ?? "").trim().toLowerCase());
+
+export function saveLastKey(key) {
+  mkdirSync(dirname(STATE_FILE), { recursive: true });
+  writeFileSync(STATE_FILE, `${key}\n`);
+}
+
+// 마지막으로 보여 준 슬라이드의 다음 키를 돌려줍니다.
+export function nextKey() {
+  if (!existsSync(STATE_FILE)) throw new Error("아직 보여 준 슬라이드가 없음. 먼저 /demo 2 처럼 시작하세요");
+  const last = readFileSync(STATE_FILE, "utf8").trim();
+  const { next } = resolveDemo(last);
+  if (!next) throw new Error(`${last}가 이 섹션의 마지막 시연 코드임`);
+  return next;
 }
 
 // 파일 내용이 시연 코드와 같은지 확인합니다. append이면 파일 끝부분만 비교합니다.
@@ -243,7 +273,9 @@ function main(argv) {
   const args = rest.filter((a) => a !== "--append");
   try {
     if (cmd === "show") {
-      console.log(JSON.stringify(resolveDemo(args[0]), null, 2));
+      const demo = resolveDemo(isNextWord(args[0]) ? nextKey() : args[0]);
+      saveLastKey(demo.key);
+      console.log(JSON.stringify(demo, null, 2));
       return 0;
     }
     if (cmd === "write" || cmd === "check") {
