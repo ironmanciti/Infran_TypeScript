@@ -32,7 +32,8 @@ __pycache__/
 .DS_Store
 Thumbs.db
 desktop.ini
-.vscode/
+.vscode/*
+!.vscode/settings.json
 
 # 강사용 스킬 (수강생에게 배포하지 않음)
 .claude/skills/codeimage/
