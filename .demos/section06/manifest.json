@@ -1,0 +1,398 @@
+{
+  "section": "06",
+  "title": "Section 6. 배열",
+  "version": "1.0.0",
+  "source": "Section06_Arrays.pptx",
+  "slides": {
+    "4": {
+      "lecture": "48강",
+      "title": "배열 선언과 타입 추론",
+      "combine": true,
+      "parts": [
+        {
+          "label": "타입 추론",
+          "file": "s04-1.ts",
+          "expectErrors": [
+            "TS7034",
+            "TS7005"
+          ],
+          "note": "빈 배열 줄은 TypeScript 오류가 나지만 실행은 됩니다."
+        },
+        {
+          "label": "빈 배열은 타입을 지정합니다",
+          "file": "s04-2.ts"
+        }
+      ],
+      "points": [
+        "대괄호로 배열을 만들면 TypeScript가 요소의 타입을 추론합니다.",
+        "빈 배열은 요소가 없어 타입을 추론할 수 없습니다.",
+        "나중에 채울 배열은 User[]처럼 처음부터 타입을 명시합니다."
+      ]
+    },
+    "5": {
+      "lecture": "48강",
+      "title": "유니언 타입 배열",
+      "combine": true,
+      "parts": [
+        {
+          "label": "script.ts",
+          "file": "s05-1.ts",
+          "expectErrors": [
+            "TS2322"
+          ],
+          "note": "bad 줄은 TypeScript 오류가 나지만 실행은 됩니다."
+        }
+      ],
+      "points": [
+        "(number | string)[]는 숫자와 문자열을 섞어 담는 배열입니다.",
+        "number[] | string[]는 숫자만 담는 배열 또는 문자열만 담는 배열입니다.",
+        "괄호 안의 타입이 배열 요소의 타입입니다."
+      ]
+    },
+    "6": {
+      "lecture": "48강",
+      "title": "요소 추가와 인덱스 접근",
+      "combine": true,
+      "parts": [
+        {
+          "label": "script.ts",
+          "file": "s06-1.ts"
+        }
+      ],
+      "points": [
+        "push는 끝에 요소를 추가하고 새 길이를 반환합니다.",
+        "인덱스는 0부터 시작합니다.",
+        "범위를 벗어난 인덱스도 TypeScript는 오류로 표시하지 않고, 실행하면 undefined입니다."
+      ]
+    },
+    "7": {
+      "lecture": "48강",
+      "title": "중첩 배열",
+      "combine": true,
+      "parts": [
+        {
+          "label": "script.ts",
+          "file": "s07-1.ts"
+        }
+      ],
+      "points": [
+        "배열도 값이므로 배열 안에 배열을 넣을 수 있습니다.",
+        "중첩이 깊어지면 추론된 타입이 복잡해지므로 타입 별칭으로 나누어 정의합니다."
+      ]
+    },
+    "9": {
+      "lecture": "49강",
+      "title": "요소를 추가하고 제거하는 메서드",
+      "combine": true,
+      "parts": [
+        {
+          "label": "메서드 표",
+          "file": "s09-1.ts",
+          "source": "table"
+        }
+      ],
+      "points": [
+        "push와 unshift는 요소를 추가하고 새 길이를 반환합니다.",
+        "pop과 shift는 제거한 요소를 반환하며, 타입은 User | undefined입니다.",
+        "이 메서드들은 모두 원본 배열을 직접 변경합니다."
+      ]
+    },
+    "10": {
+      "lecture": "49강",
+      "title": "배열을 문자열로 변환",
+      "combine": true,
+      "parts": [
+        {
+          "label": "script.ts",
+          "file": "s10-1.ts"
+        },
+        {
+          "label": "객체 배열",
+          "file": "s10-2.ts"
+        }
+      ],
+      "points": [
+        "toString은 쉼표로, join은 지정한 구분자로 요소를 연결합니다.",
+        "객체 배열에 toString을 쓰면 [object Object]가 출력됩니다."
+      ]
+    },
+    "12": {
+      "lecture": "50강",
+      "title": "튜플",
+      "combine": false,
+      "parts": [
+        {
+          "label": "튜플",
+          "file": "s12-1.ts"
+        },
+        {
+          "label": "readonly 튜플",
+          "file": "s12-2.ts",
+          "expectErrors": [
+            "TS2339"
+          ],
+          "note": "일부러 오류를 보여 주는 코드입니다. 출력은 없습니다."
+        }
+      ],
+      "points": [
+        "튜플은 위치마다 타입이 정해진 고정 길이 배열입니다.",
+        "튜플에 push해도 오류가 나지 않아 타입과 실제 값이 달라질 수 있습니다.",
+        "길이를 고정하려면 readonly를 함께 사용합니다."
+      ]
+    },
+    "13": {
+      "lecture": "50강",
+      "title": "구조 분해 할당",
+      "combine": true,
+      "parts": [
+        {
+          "label": "객체 구조 분해",
+          "file": "s13-1.ts"
+        },
+        {
+          "label": "배열 구조 분해",
+          "file": "s13-2.ts"
+        }
+      ],
+      "points": [
+        "객체는 중괄호로 키 이름에 맞춰 꺼냅니다.",
+        "배열은 대괄호로 순서대로 꺼내며, 변수 이름은 자유롭게 정합니다.",
+        "튜플의 타입도 타입 별칭으로 정의할 수 있습니다."
+      ]
+    },
+    "18": {
+      "lecture": "52강",
+      "title": "rest 매개변수",
+      "combine": true,
+      "parts": [
+        {
+          "label": "script.ts",
+          "file": "s18-1.ts"
+        }
+      ],
+      "points": [
+        "매개변수 앞에 ...을 붙이면 전달한 인자가 배열로 모입니다.",
+        "rest 매개변수의 타입은 배열 타입으로 지정합니다."
+      ]
+    },
+    "19": {
+      "lecture": "52강",
+      "title": "배열 합치기와 spread",
+      "combine": true,
+      "parts": [
+        {
+          "label": "script.ts",
+          "file": "s19-1.ts",
+          "expectErrors": [
+            "TS2345"
+          ],
+          "note": "sum(numbers) 줄은 TypeScript 오류가 나지만 실행은 됩니다."
+        }
+      ],
+      "points": [
+        "concat과 spread 모두 원본 배열을 변경하지 않고 새 배열을 만듭니다.",
+        "sum(...numbers)는 배열을 펼쳐 sum(5, 7, 8)로 호출합니다."
+      ]
+    },
+    "20": {
+      "lecture": "52강",
+      "title": "구조 분해와 rest",
+      "combine": true,
+      "parts": [
+        {
+          "label": "배열",
+          "file": "s20-1.ts"
+        },
+        {
+          "label": "객체",
+          "file": "s20-2.ts"
+        }
+      ],
+      "points": [
+        "필요한 값만 꺼내고 나머지는 ...rest로 새 배열이나 객체에 모읍니다.",
+        "shift와 달리 원본 배열을 그대로 둡니다."
+      ]
+    },
+    "22": {
+      "lecture": "53강",
+      "title": "for 문과 for...of 문",
+      "combine": false,
+      "parts": [
+        {
+          "label": "for 문",
+          "file": "s22-1.ts"
+        },
+        {
+          "label": "for...of 문",
+          "file": "s22-2.ts"
+        }
+      ],
+      "points": [
+        "인덱스가 필요하면 for 문을 사용합니다.",
+        "요소를 처음부터 끝까지 차례로 꺼낼 때는 for...of 문이 간결합니다."
+      ]
+    },
+    "23": {
+      "lecture": "53강",
+      "title": "배열에서 값 찾기",
+      "combine": false,
+      "parts": [
+        {
+          "label": "직접 구현",
+          "file": "s23-1.ts"
+        },
+        {
+          "label": "매개변수를 객체로 받기",
+          "file": "s23-2.ts"
+        }
+      ],
+      "points": [
+        "for...of와 return으로 값을 찾으면 바로 함수를 종료합니다.",
+        "매개변수가 많으면 객체로 묶고 매개변수 자리에서 구조 분해합니다.",
+        "실무에서는 includes 메서드를 사용합니다."
+      ]
+    },
+    "28": {
+      "lecture": "55강",
+      "title": "forEach",
+      "combine": true,
+      "parts": [
+        {
+          "label": "script.ts",
+          "file": "s28-1.ts"
+        }
+      ],
+      "points": [
+        "forEach는 각 요소마다 콜백 함수를 실행합니다.",
+        "콜백의 매개변수는 (요소, 인덱스, 원본 배열) 순서이며 필요한 것만 받습니다.",
+        "구조 분해하거나 매개변수가 둘 이상이면 괄호로 감쌉니다."
+      ]
+    },
+    "29": {
+      "lecture": "55강",
+      "title": "map",
+      "combine": true,
+      "parts": [
+        {
+          "label": "script.ts",
+          "file": "s29-1.ts"
+        }
+      ],
+      "points": [
+        "map은 콜백 함수의 반환값으로 새 배열을 만듭니다.",
+        "원본 배열 students는 변경되지 않습니다.",
+        "객체를 바로 반환할 때는 중괄호를 괄호로 감쌉니다."
+      ]
+    },
+    "31": {
+      "lecture": "56강",
+      "title": "find와 findIndex",
+      "combine": true,
+      "parts": [
+        {
+          "label": "script.ts",
+          "file": "s31-1.ts"
+        }
+      ],
+      "points": [
+        "find는 조건을 만족하는 첫 번째 요소를, 없으면 undefined를 반환합니다.",
+        "findIndex는 그 인덱스를, 없으면 -1을 반환합니다."
+      ]
+    },
+    "32": {
+      "lecture": "56강",
+      "title": "filter",
+      "combine": true,
+      "parts": [
+        {
+          "label": "script.ts",
+          "file": "s32-1.ts"
+        }
+      ],
+      "points": [
+        "콜백 함수가 true를 반환한 요소만 모아 새 배열을 만듭니다.",
+        "조건에 맞는 요소가 없으면 빈 배열을 반환합니다.",
+        "원본 배열은 변경되지 않습니다."
+      ]
+    },
+    "34": {
+      "lecture": "57강",
+      "title": "every와 some",
+      "combine": true,
+      "parts": [
+        {
+          "label": "script.ts",
+          "file": "s34-1.ts"
+        }
+      ],
+      "points": [
+        "every는 모든 요소가 조건을 만족할 때 true입니다.",
+        "some은 적어도 하나의 요소가 조건을 만족할 때 true입니다."
+      ]
+    },
+    "35": {
+      "lecture": "57강",
+      "title": "reduce",
+      "combine": false,
+      "parts": [
+        {
+          "label": "나이 합계",
+          "file": "s35-1.ts"
+        },
+        {
+          "label": "초기값이 없는 경우",
+          "file": "s35-2.ts",
+          "expectErrors": [
+            "TS2365"
+          ],
+          "note": "일부러 오류를 보여 주는 코드입니다. 출력은 없습니다."
+        }
+      ],
+      "points": [
+        "콜백 함수의 반환값이 다음 호출의 누적값이 됩니다.",
+        "초기값이 없으면 첫 번째 요소가 누적값이 됩니다.",
+        "합계처럼 요소와 다른 타입의 값을 만들 때는 초기값을 지정합니다."
+      ]
+    },
+    "36": {
+      "lecture": "57강",
+      "title": "배열 메서드 정리",
+      "combine": true,
+      "parts": [
+        {
+          "label": "원본 변경 비교",
+          "file": "s36-1.ts",
+          "source": "table"
+        }
+      ],
+      "points": [
+        "push, pop, shift, unshift, splice, sort는 원본을 변경합니다.",
+        "원본을 유지하려면 map, filter, concat, toSorted처럼 새 배열을 반환하는 메서드를 사용합니다."
+      ]
+    },
+    "38": {
+      "lecture": "58강",
+      "title": "객체 순회",
+      "combine": false,
+      "parts": [
+        {
+          "label": "for...of 사용",
+          "file": "s38-1.ts",
+          "expectErrors": [
+            "TS2488"
+          ],
+          "note": "실행하면 TypeError가 납니다. 객체는 for...of로 순회할 수 없습니다."
+        },
+        {
+          "label": "키와 값 꺼내기",
+          "file": "s38-2.ts"
+        }
+      ],
+      "points": [
+        "for...in은 객체의 키를 차례로 꺼냅니다.",
+        "Object.keys, Object.values, Object.entries는 키, 값, [키, 값] 튜플을 배열로 반환합니다.",
+        "결과가 배열이므로 배열 메서드를 모두 사용할 수 있습니다."
+      ]
+    }
+  }
+}

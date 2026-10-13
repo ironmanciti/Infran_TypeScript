@@ -1,0 +1,4 @@
+{ name: 'Jane', isAdult: true }
+{ name: 'Jane', isAdult: true }
+[ { name: 'Jane', isAdult: true }, { name: 'Bob', isAdult: true } ]
+[ { name: 'Jane', isAdult: true }, { name: 'Bob', isAdult: true } ]

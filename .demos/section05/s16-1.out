@@ -1,0 +1,2 @@
+{ item: 'Something', price: 100, quantity: 2 }
+{ firstName: 'John', lastName: 'Doe', age: 30 }

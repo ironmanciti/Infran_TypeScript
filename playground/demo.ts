@@ -1,15 +1,12 @@
-// void
-function logMessage(): void {
-  console.log("Hello");
-}
+const obj = { a: 1, b: 2, c: 3 };
 
-console.log(logMessage());  // undefined
+for (const key in obj) console.log(key);  // a b c
 
-// number | undefined
-function double(a: number): number | undefined {
-  if (a === 0) return undefined;
-  return a * 2;
-}
+console.log(Object.entries(obj));
 
-console.log(double(2));  // 4
-console.log(double(0));  // undefined
+Object.entries(obj).forEach(([key, value]) =>
+  console.log(key, value));               // a 1 ...
+
+console.log(Object.keys(obj));      // [ 'a', 'b', 'c' ]
+console.log(Object.values(obj));    // [ 1, 2, 3 ]
+console.log(Object.entries(obj));   // [ [ 'a', 1 ], [ 'b', 2 ], [ 'c', 3 ] ]

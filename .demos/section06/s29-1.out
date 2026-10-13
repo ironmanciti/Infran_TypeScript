@@ -1,0 +1,6 @@
+[
+  { name: 'John', isAdult: false },
+  { name: 'Jane', isAdult: true },
+  { name: 'Bob', isAdult: true }
+]
+{ name: 'John', age: 15 }

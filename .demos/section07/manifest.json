@@ -1,0 +1,262 @@
+{
+  "section": "07",
+  "title": "Section 7. 컬렉션과 객체 지향 프로그래밍",
+  "version": "1.0.0",
+  "source": "Section07_CollectionsAndOOP.pptx",
+  "slides": {
+    "4": {
+      "lecture": "60강",
+      "title": "클래스",
+      "combine": true,
+      "parts": [
+        {
+          "label": "script.ts",
+          "file": "s04-1.ts"
+        }
+      ],
+      "points": [
+        "클래스는 속성과 메서드의 구현을 하나로 묶은 설계도입니다.",
+        "constructor는 new로 호출될 때 실행되어 속성을 초기화합니다.",
+        "new 클래스이름(인자)으로 인스턴스를 만듭니다."
+      ]
+    },
+    "6": {
+      "lecture": "61강",
+      "title": "부모 클래스",
+      "combine": true,
+      "parts": [
+        {
+          "label": "script.ts",
+          "file": "s06-1.ts"
+        }
+      ],
+      "points": [
+        "여러 클래스가 공유하는 속성과 메서드를 부모 클래스에 한 번만 작성합니다.",
+        "가격이 30 미만이면 배송비 0, 아니면 가격의 5%입니다.",
+        "실무에서 고유 ID는 Math.random 대신 crypto.randomUUID()를 사용합니다."
+      ]
+    },
+    "7": {
+      "lecture": "61강",
+      "title": "자식 클래스와 메서드 재정의",
+      "combine": true,
+      "parts": [
+        {
+          "label": "script.ts",
+          "file": "s07-1.ts",
+          "note": "ID가 무작위라 실행 결과를 고정하려고 book.id = 123 줄을 넣었습니다."
+        }
+      ],
+      "points": [
+        "자식 생성자에서는 this를 쓰기 전에 super()로 부모 생성자를 먼저 호출합니다.",
+        "같은 이름의 메서드를 다시 정의하면 자식의 메서드가 사용됩니다(재정의).",
+        "super.메서드()로 부모의 구현을 호출해 결과를 확장할 수 있습니다."
+      ]
+    },
+    "10": {
+      "lecture": "63강",
+      "title": "다형성",
+      "combine": true,
+      "parts": [
+        {
+          "label": "script.ts",
+          "file": "s10-1.ts"
+        }
+      ],
+      "points": [
+        "getSalary라는 하나의 이름으로 호출하지만 실제 동작은 클래스마다 다릅니다.",
+        "super.getSalary()로 부모의 결과를 가져와 확장합니다.",
+        "직원과 관리자가 섞인 배열을 같은 코드로 처리할 수 있습니다."
+      ]
+    },
+    "11": {
+      "lecture": "63강",
+      "title": "인터페이스",
+      "combine": false,
+      "parts": [
+        {
+          "label": "implements",
+          "file": "s11-1.ts"
+        },
+        {
+          "label": "메서드가 빠진 경우",
+          "file": "s11-2.ts",
+          "expectErrors": [
+            "TS2420"
+          ],
+          "note": "일부러 오류를 보여 주는 코드입니다. 출력은 없습니다."
+        }
+      ],
+      "points": [
+        "인터페이스는 클래스가 반드시 갖춰야 할 속성과 메서드를 정의합니다.",
+        "implements로 적용하며, 하나라도 빠지면 TS2420 오류가 납니다.",
+        "type은 유니언 타입을 만들 수 있고 interface는 만들 수 없습니다."
+      ]
+    },
+    "13": {
+      "lecture": "64강",
+      "title": "접근 제어자",
+      "combine": true,
+      "parts": [
+        {
+          "label": "script.ts",
+          "file": "s13-1.ts",
+          "expectErrors": [
+            "TS2445"
+          ],
+          "note": "animal.name 줄은 TypeScript 오류가 나지만 실행은 됩니다."
+        }
+      ],
+      "points": [
+        "public은 어디서나, protected는 클래스와 자식 클래스 안에서만 접근할 수 있습니다.",
+        "private은 그 클래스 안에서만 접근할 수 있습니다.",
+        "아무것도 붙이지 않으면 public입니다."
+      ]
+    },
+    "14": {
+      "lecture": "64강",
+      "title": "캡슐화",
+      "combine": true,
+      "parts": [
+        {
+          "label": "script.ts",
+          "file": "s14-1.ts",
+          "expectErrors": [
+            "TS2341"
+          ],
+          "note": "storage.data = [] 줄은 TypeScript 오류가 나지만 실행하면 데이터가 지워집니다."
+        }
+      ],
+      "points": [
+        "데이터를 private으로 숨기고 add, getItems 같은 공개 메서드로만 다루게 합니다.",
+        "배열을 그대로 반환하면 참조가 전달되므로 spread로 복사본을 반환합니다.",
+        "TypeScript의 private은 개발 단계에서만 검사되며, 실행 시점에도 막으려면 #data를 사용합니다."
+      ]
+    },
+    "17": {
+      "lecture": "66강",
+      "title": "any의 문제와 제네릭",
+      "combine": false,
+      "parts": [
+        {
+          "label": "any를 사용한 경우",
+          "file": "s17-1.ts"
+        },
+        {
+          "label": "제네릭을 사용한 경우",
+          "file": "s17-2.ts",
+          "expectErrors": [
+            "TS2551"
+          ],
+          "note": "result.agee 줄은 TypeScript 오류가 나지만 실행은 됩니다."
+        }
+      ],
+      "points": [
+        "any를 쓰면 반환값의 타입 정보가 사라져 오타도 잡지 못합니다.",
+        "제네릭은 값이 아니라 타입을 받는 매개변수입니다.",
+        "호출할 때 전달한 값으로 T가 추론되며, identity<User>(값)처럼 직접 지정할 수도 있습니다."
+      ]
+    },
+    "18": {
+      "lecture": "66강",
+      "title": "여러 타입 매개변수와 화살표 함수",
+      "combine": true,
+      "parts": [
+        {
+          "label": "타입 매개변수 두 개",
+          "file": "s18-1.ts"
+        },
+        {
+          "label": "제네릭의 위치",
+          "file": "s18-2.ts"
+        }
+      ],
+      "points": [
+        "타입 매개변수는 <T, U>처럼 여러 개 선언할 수 있습니다.",
+        "일반 함수는 이름과 괄호 사이, 화살표 함수는 =와 괄호 사이에 씁니다.",
+        "타입을 직접 지정할 때는 모두 지정합니다."
+      ]
+    },
+    "20": {
+      "lecture": "67강",
+      "title": "타입 단언 (as)",
+      "combine": false,
+      "parts": [
+        {
+          "label": "as 사용",
+          "file": "s20-1.ts"
+        },
+        {
+          "label": "잘못된 단언",
+          "file": "s20-2.ts",
+          "expectErrors": [
+            "TS2352"
+          ],
+          "note": "실행하면 bar.toFixed 줄에서 TypeError가 납니다."
+        }
+      ],
+      "points": [
+        "as는 타입 검사를 통과시킬 뿐 값을 바꾸지 않습니다.",
+        "실제 값이 지정한 타입이 아니면 실행 시점에 오류가 납니다.",
+        "주로 타입 정의가 부정확한 외부 라이브러리의 반환값에 사용합니다."
+      ]
+    },
+    "23": {
+      "lecture": "69강",
+      "title": "제네릭 클래스",
+      "combine": true,
+      "parts": [
+        {
+          "label": "script.ts",
+          "file": "s23-1.ts",
+          "expectErrors": [
+            "TS2345"
+          ],
+          "note": "storage.add(5) 줄은 TypeScript 오류가 나지만 실행은 됩니다."
+        }
+      ],
+      "points": [
+        "new DataStorage<string>()처럼 타입을 지정하면 클래스 안의 모든 T가 string이 됩니다.",
+        "매개변수에 = 기본값을 지정하면 선택적 매개변수가 됩니다.",
+        "get, set을 붙인 메서드는 괄호 없이 속성처럼 읽고 씁니다."
+      ]
+    },
+    "25": {
+      "lecture": "70강",
+      "title": "Set",
+      "combine": true,
+      "parts": [
+        {
+          "label": "script.ts",
+          "file": "s25-1.ts"
+        },
+        {
+          "label": "집합 연산과 clear",
+          "file": "s25-2.ts",
+          "source": "table"
+        }
+      ],
+      "points": [
+        "Set은 중복된 값을 허용하지 않는 컬렉션입니다.",
+        "delete는 삭제하면 true, 없으면 false를 반환하고, size는 괄호 없는 getter입니다.",
+        "[...new Set(배열)]로 배열의 중복을 제거합니다."
+      ]
+    },
+    "27": {
+      "lecture": "71강",
+      "title": "Map",
+      "combine": true,
+      "parts": [
+        {
+          "label": "script.ts",
+          "file": "s27-1.ts"
+        }
+      ],
+      "points": [
+        "Map은 키와 값의 쌍을 저장하고 키로 값을 바로 찾습니다.",
+        "get은 키가 없으면 undefined를, set은 같은 키의 값을 덮어씁니다.",
+        "forEach의 콜백은 (값, 키) 순서로 받습니다."
+      ]
+    }
+  }
+}

@@ -1,0 +1,385 @@
+{
+  "section": "05",
+  "title": "Section 5. 객체",
+  "version": "1.0.0",
+  "questions": [
+    {
+      "id": "s05-q1",
+      "lecture": "40강",
+      "topic": "객체가 필요한 이유",
+      "question": "이 코드를 객체로 바꾸면 좋은 이유로 옳은 것은?",
+      "code": "const book1Title = \"TS\";\nconst book1Price = 30000;\nconst book2Title = \"JS\";\nconst book2Price = 25000;",
+      "choices": {
+        "A": "개별 변수는 나중에 값을 바꿀 수 없어 수정할 때 불편하기 때문이다",
+        "B": "책마다 정보를 하나로 묶어 새 변수 이름을 계속 지을 필요가 없기 때문이다",
+        "C": "변수 이름 중간에 숫자가 들어가면 식별자 규칙에 어긋나기 때문이다"
+      },
+      "answer": "B",
+      "wrongReasons": {
+        "A": "값을 바꾸기 어렵다고 생각했군요. 그건 const로 선언했기 때문이지 개별 변수라서 생기는 문제가 아닙니다. 개별 변수의 진짜 불편함은 데이터가 늘어날 때 드러나요. 40강의 user1Name, user2Name 예제에서 무엇이 번거로웠는지 떠올려 보세요.",
+        "C": "숫자가 들어간 이름이 문제라고 생각했어요. 식별자는 숫자로 시작하지만 않으면 중간에 숫자를 써도 됩니다. 40강의 user1Name, user2Name 예제에서 사용자가 늘어날 때마다 무엇을 계속 해야 했는지 떠올려 보세요."
+      },
+      "explanation": "개별 변수로는 책이 늘어날 때마다 book3Title처럼 새 이름을 계속 만들어야 합니다. 객체를 쓰면 title과 price를 하나로 묶어 관리할 수 있고, 키는 각 객체에 속하므로 여러 객체에서 같은 키 이름을 써도 충돌하지 않아요."
+    },
+    {
+      "id": "s05-q2",
+      "lecture": "40강",
+      "topic": "객체 리터럴",
+      "question": "이 코드에서 오류가 나는 줄로 옳은 것은?",
+      "code": "const cat = { name: \"Nabi\", age: 3 };\nconst dog = { name: \"Bori\", age: 5 };\nconst bird = { name: \"Tweety\"; age: 1 };",
+      "choices": {
+        "A": "2번째 줄만",
+        "B": "2번째 줄과 3번째 줄",
+        "C": "3번째 줄만"
+      },
+      "answer": "C",
+      "wrongReasons": {
+        "A": "dog가 cat과 같은 키를 써서 충돌한다고 생각했군요. 키는 변수가 아니라 각 객체에 속하므로 다른 객체에서 같은 키 이름을 써도 문제없습니다. 속성을 구분하는 기호도 줄마다 다시 확인해 보세요. 40강에서 user와 user2를 같은 키로 만든 예제를 떠올려 보세요.",
+        "B": "한 줄은 맞게 찾았지만 키 이름이 겹치는 것도 오류라고 생각했어요. 키는 각 객체에 속하므로 여러 객체에서 같은 키 이름을 써도 충돌하지 않습니다. 40강에서 user와 user2를 같은 키로 만든 예제를 떠올려 보세요."
+      },
+      "explanation": "객체 안의 속성은 세미콜론이 아니라 쉼표로 구분하므로 3번째 줄이 오류입니다. 키는 각 객체에 속하기 때문에 cat, dog, bird가 같은 키 이름을 써도 충돌하지 않아요."
+    },
+    {
+      "id": "s05-q3",
+      "lecture": "40강",
+      "topic": "속성 접근",
+      "question": "이 코드의 출력 결과로 옳은 것은?",
+      "code": "const field = \"price\";\nconst item = { price: 500, \"product name\": \"pen\" };\nconsole.log(item[field]);\nconsole.log(item[\"product name\"]);",
+      "choices": {
+        "A": "500, pen",
+        "B": "undefined, pen",
+        "C": "500, undefined"
+      },
+      "answer": "A",
+      "wrongReasons": {
+        "B": "공백이 있는 키는 맞게 읽었지만 item[field]가 \"field\"라는 키를 찾는다고 생각했어요. 대괄호 안에 따옴표 없이 변수를 쓰면 그 변수에 담긴 값이 키가 됩니다. 40강에서 키를 변수로 지정할 때 대괄호 표기법을 쓴다고 했던 내용을 떠올려 보세요.",
+        "C": "변수 키는 맞게 읽었지만 공백이 있는 키는 읽을 수 없다고 생각했어요. 식별자 규칙에 맞지 않는 키도 따옴표로 감싸 만들고 대괄호 표기법으로 읽을 수 있습니다. 40강의 user[\"favorite color\"] 예제가 무엇을 출력했는지 떠올려 보세요."
+      },
+      "explanation": "item[field]는 field에 담긴 \"price\"를 키로 써서 500을 읽습니다. 공백이 들어간 키는 점 표기법으로 쓸 수 없지만 item[\"product name\"]처럼 대괄호 표기법으로 읽으면 pen이 나와요."
+    },
+    {
+      "id": "s05-q4",
+      "lecture": "40강",
+      "topic": "메서드와 this",
+      "question": "TypeScript가 오류를 표시하는 줄로 옳은 것은?",
+      "code": "const shop = {\n  title: \"Mart\",\n  open() {\n    console.log(this.title);\n    console.log(title);\n  },\n};",
+      "choices": {
+        "A": "4번째 줄만",
+        "B": "4번째 줄과 5번째 줄",
+        "C": "5번째 줄만"
+      },
+      "answer": "C",
+      "wrongReasons": {
+        "A": "this.title이 문제라고 생각했군요. 메서드를 shop.open()처럼 호출하면 this는 그 메서드를 호출한 객체를 가리킵니다. 40강의 print() { console.log(this.age); } 예제에서 user.print()가 무엇을 출력했는지 떠올려 보세요.",
+        "B": "한 줄은 맞게 찾았지만 this.title까지 오류라고 생각했어요. this는 메서드를 호출한 객체를 가리키므로 this를 통해 객체의 속성에 접근할 수 있습니다. 40강의 print() { console.log(this.age); } 예제를 떠올려 보세요."
+      },
+      "explanation": "메서드 안에서 title처럼 이름만 쓰면 객체의 속성이 아니라 그런 이름의 변수를 찾기 때문에 5번째 줄에서 TS2304 오류가 납니다. 객체의 속성은 this.title처럼 this로 접근해요."
+    },
+    {
+      "id": "s05-q5",
+      "lecture": "40강",
+      "topic": "화살표 함수와 this",
+      "question": "이 코드에 대한 설명으로 옳은 것은?",
+      "code": "const timer = {\n  sec: 10,\n  show: () => {\n    console.log(this.sec);\n  },\n};",
+      "choices": {
+        "A": "화살표 함수에는 자신만의 this가 없어 this가 timer를 가리키지 않는다",
+        "B": "화살표 함수도 메서드이므로 timer.show()를 호출하면 10이 출력된다",
+        "C": "show를 메서드 축약 문법으로 바꿔도 this는 timer를 가리키지 않는다"
+      },
+      "answer": "A",
+      "wrongReasons": {
+        "B": "화살표 함수도 객체 안에 있으니 this가 그 객체를 가리킨다고 생각했군요. 화살표 함수는 자신만의 this가 없어 바깥 범위의 this를 그대로 씁니다. 40강에서 print를 화살표 함수로 바꿨을 때 어떤 오류가 났는지 떠올려 보세요.",
+        "C": "메서드 축약 문법의 this를 잘못 생각했어요. 축약 문법이나 function으로 작성한 메서드에서는 this가 메서드를 호출한 객체를 가리킵니다. 40강의 print() { console.log(this.age); } 예제에서 user.print()가 무엇을 출력했는지 떠올려 보세요."
+      },
+      "explanation": "화살표 함수는 자신만의 this가 없고 정의된 바깥 범위의 this를 그대로 사용하므로 this가 timer를 가리키지 않습니다. 메서드 안에서 this로 객체에 접근하려면 show() { ... } 같은 메서드 축약 문법이나 function을 써요."
+    },
+    {
+      "id": "s05-q6",
+      "lecture": "41강",
+      "topic": "선택적 속성",
+      "question": "note에 마우스를 올렸을 때 표시되는 타입으로 옳은 것은?",
+      "code": "type Item = { name: string; price: number; memo?: string };\nconst pen: Item = { name: \"pen\", price: 1000 };\nconst note = pen.memo;",
+      "choices": {
+        "A": "string",
+        "B": "string | undefined",
+        "C": "undefined"
+      },
+      "answer": "B",
+      "wrongReasons": {
+        "A": "memo 뒤에 string을 적었으니 string이라고 생각했군요. 속성 이름 뒤에 ?를 붙인 선택적 속성은 값이 없을 수도 있어서 다른 타입이 함께 붙습니다. 41강의 phoneNumber?: string 예제에서 phoneNumber의 타입이 무엇이었는지 떠올려 보세요.",
+        "C": "pen을 만들 때 memo를 생략했으니 값이 없는 타입만 남는다고 생각했군요. 변수에 Item 타입을 지정하면 TypeScript는 그 타입에 선언된 대로 memo의 타입을 봅니다. 41강의 phoneNumber?: string 예제에서 phoneNumber의 타입이 무엇이었는지 떠올려 보세요."
+      },
+      "explanation": "memo?: string은 선택적 속성이라 타입이 string | undefined입니다. 그래서 객체를 만들 때 생략할 수 있고, 꺼낸 값을 쓸 때는 undefined인지 먼저 확인해야 해요."
+    },
+    {
+      "id": "s05-q7",
+      "lecture": "41강",
+      "topic": "속성 삭제",
+      "question": "TypeScript가 오류를 표시하는 줄로 옳은 것은?",
+      "code": "type Book = { title: string; page: number; note?: string };\nconst book: Book = { title: \"TS\", page: 100, note: \"good\" };\nbook.page = 200;\ndelete book.note;\ndelete book.title;",
+      "choices": {
+        "A": "3번째 줄",
+        "B": "4번째 줄",
+        "C": "5번째 줄"
+      },
+      "answer": "C",
+      "wrongReasons": {
+        "A": "속성 값을 바꾸는 것이 안 된다고 생각했군요. 객체 속성은 값을 할당해 수정할 수 있습니다. 41강의 user.age = 15 예제를 떠올려 보세요.",
+        "B": "delete 자체가 문제라고 생각했군요. delete는 쓸 수 있지만 삭제할 수 있는 속성에는 조건이 있습니다. 41강에서 delete user.phoneNumber와 delete user.name 중 어느 쪽에 오류가 났는지 떠올려 보세요."
+      },
+      "explanation": "delete로 삭제할 수 있는 속성은 선택적 속성뿐이라 필수 속성 title을 지우는 5번째 줄에서 TS2790 오류가 납니다. 선택적 속성 note는 삭제할 수 있고, page는 값을 할당해 수정할 수 있어요."
+    },
+    {
+      "id": "s05-q8",
+      "lecture": "42강",
+      "topic": "함수와 객체 수정",
+      "question": "이 코드의 출력 결과로 옳은 것은?",
+      "code": "type Car = { model: string; km: number };\nconst car: Car = { model: \"K5\", km: 100 };\nfunction drive(c: Car, dist: number): Car { c.km += dist; return c; }\nconsole.log(drive(car, 50).km);\nconsole.log(car.km);",
+      "choices": {
+        "A": "150, 100",
+        "B": "150, 150",
+        "C": "100, 150"
+      },
+      "answer": "B",
+      "wrongReasons": {
+        "A": "drive의 반환값은 맞게 계산했지만 원래 car는 그대로라고 생각했어요. 함수에 객체를 넘기면 같은 객체를 가리키는 참조값이 전달되므로, 함수 안에서 바꾼 속성은 원래 객체에도 반영됩니다. 42강의 updatePersonAge 예제에서 person.age가 어떻게 됐는지 떠올려 보세요.",
+        "C": "함수 안의 변경이 원래 car에 반영된다는 점은 맞게 봤어요. 하지만 첫 줄의 출력을 다시 확인해 보세요. drive는 km를 바꾼 뒤 그 객체를 반환합니다. 42강의 updatePersonAge(person, 18).age 예제가 무엇을 출력했는지 떠올려 보세요."
+      },
+      "explanation": "drive는 전달받은 객체의 km를 150으로 바꾸고 그 객체를 반환하므로 첫 출력은 150입니다. c와 car는 같은 객체를 가리키므로 car.km도 150이에요."
+    },
+    {
+      "id": "s05-q9",
+      "lecture": "42강",
+      "topic": "참조값 전달",
+      "question": "이 코드의 출력 결과로 옳은 것은?",
+      "code": "type P = { name: string; age: number };\nconst p: P = { name: \"Kim\", age: 20 };\nfunction reset(x: P): void { x.age = 0; x = { name: \"Lee\", age: 99 }; }\nreset(p);\nconsole.log(p.name, p.age);",
+      "choices": {
+        "A": "Lee 99",
+        "B": "Kim 20",
+        "C": "Kim 0"
+      },
+      "answer": "C",
+      "wrongReasons": {
+        "A": "매개변수에 새 객체를 대입하면 원래 변수도 그 객체로 바뀐다고 생각했군요. 매개변수에는 참조값의 복사본이 들어 있어서, 새 객체를 대입하면 x만 다른 객체를 가리킬 뿐 p는 영향을 받지 않습니다. 42강의 replacePerson 예제에서 person.name이 무엇이었는지 떠올려 보세요.",
+        "B": "새 객체 대입이 원래 객체에 영향을 주지 않는다는 점은 맞게 봤어요. 하지만 그 앞에서 x.age를 바꾼 부분을 다시 보세요. 새 객체를 대입하기 전까지 x는 p와 같은 객체를 가리킵니다. 42강의 updatePersonAge 예제에서 person.age가 어떻게 됐는지 떠올려 보세요."
+      },
+      "explanation": "x.age = 0은 p와 같은 객체를 가리키는 참조값으로 속성을 바꾸므로 원래 객체에 반영됩니다. 그 뒤 x에 새 객체를 대입해도 x만 다른 객체를 가리킬 뿐이라 p는 그대로예요. 그래서 Kim 0이 출력됩니다."
+    },
+    {
+      "id": "s05-q10",
+      "lecture": "42강",
+      "topic": "유효성 검사",
+      "question": "이 코드의 출력 결과로 옳은 것은?",
+      "code": "type Product = { name: string; price: number; quantity: number };\nconst isValid = (p: Product): boolean =>\n  p.name !== \"\" && p.price > 0 && Number.isInteger(p.quantity) && p.quantity >= 0;\nconsole.log(isValid({ name: \"Cup\", price: 300, quantity: 0 }));\nconsole.log(isValid({ name: \"Cup\", price: 300, quantity: 2.5 }));",
+      "choices": {
+        "A": "false, false",
+        "B": "true, false",
+        "C": "true, true"
+      },
+      "answer": "B",
+      "wrongReasons": {
+        "A": "소수 수량은 맞게 걸러 냈지만 수량 0도 유효하지 않다고 생각했어요. 조건은 0보다 큰지가 아니라 0 이상인지를 확인합니다. 42강의 validateProduct에 quantity: 0을 넣었을 때의 결과를 떠올려 보세요.",
+        "C": "수량 0은 맞게 판단했지만 2.5도 통과한다고 생각했어요. 수량은 0 이상이면서 정수여야 하고, 정수 여부는 Number.isInteger로 따로 확인합니다. 42강의 validateProduct에 quantity: 3.4를 넣었을 때의 결과를 떠올려 보세요."
+      },
+      "explanation": "&&로 연결한 네 조건을 모두 만족해야 true입니다. 수량 0은 정수이고 0 이상이라 true, 2.5는 Number.isInteger에서 걸려 false예요."
+    },
+    {
+      "id": "s05-q11",
+      "lecture": "43강",
+      "topic": "구조 분해와 이름 변경",
+      "question": "TypeScript가 오류를 표시하는 줄로 옳은 것은?",
+      "code": "const book = { title: \"TS\", pages: 300 };\nconst other = { title: \"JS\", pages: 200 };\nconst { title } = book;\nconst { title: otherTitle } = other;\nconst { pages, title } = other;",
+      "choices": {
+        "A": "4번째 줄",
+        "B": "4번째 줄과 5번째 줄",
+        "C": "3번째 줄과 5번째 줄"
+      },
+      "answer": "C",
+      "wrongReasons": {
+        "A": "콜론 뒤의 이름을 키로 생각했군요. 콜론 앞은 꺼낼 속성 이름이고, 콜론 뒤는 새로 만들 변수 이름입니다. 같은 이름의 변수가 두 번 만들어지는 곳이 있는지도 찾아보세요. 43강의 const { firstName: secondName } = secondUser 예제에서 어떤 변수가 만들어졌는지 떠올려 보세요.",
+        "B": "5번째 줄은 맞게 찾았지만 4번째 줄의 콜론을 잘못 읽었어요. 콜론 앞은 꺼낼 속성 이름이고, 콜론 뒤는 새로 만들 변수 이름입니다. 그리고 이름이 겹치면 TypeScript가 어느 줄들에 표시하는지도 생각해 보세요. 43강의 const { firstName: secondName } = secondUser 예제를 떠올려 보세요."
+      },
+      "explanation": "5번째 줄이 3번째 줄에서 이미 만든 title 변수를 다시 선언하므로 TS2451 오류가 나고, TypeScript는 겹치는 두 선언 모두에 오류를 표시합니다. 4번째 줄처럼 콜론 뒤에 다른 이름을 쓰면 겹치지 않는 변수로 꺼낼 수 있어요."
+    },
+    {
+      "id": "s05-q12",
+      "lecture": "43강",
+      "topic": "중첩 구조 분해",
+      "question": "이 구조 분해로 새로 만들어지는 변수로 옳은 것은?",
+      "code": "const order = {\n  id: 7,\n  payment: { method: \"card\", amount: 5000 },\n};\nconst { payment: { method, amount } } = order;",
+      "choices": {
+        "A": "payment, method, amount",
+        "B": "method, amount",
+        "C": "payment"
+      },
+      "answer": "B",
+      "wrongReasons": {
+        "A": "중첩된 값을 꺼낸다는 점은 맞게 봤지만 payment도 변수가 된다고 생각했어요. 콜론 뒤에 중괄호를 쓰면 payment는 그 안을 다시 구조 분해하라는 경로 표시일 뿐입니다. 43강의 const { cartItem: { item, price } } = user 예제에서 cartItem이 변수로 만들어졌는지 떠올려 보세요.",
+        "C": "콜론 앞의 이름이 변수가 된다고 생각했군요. 콜론 뒤에 중괄호가 오면 그 안에 적은 이름들이 변수가 됩니다. 43강의 const { cartItem: { item, price } } = user 예제에서 console.log에 어떤 변수를 넘겼는지 떠올려 보세요."
+      },
+      "explanation": "콜론 뒤에 중괄호를 쓰면 payment 객체를 다시 구조 분해해 method와 amount 변수만 만들어집니다. payment 자체는 변수로 만들어지지 않아요."
+    },
+    {
+      "id": "s05-q13",
+      "lecture": "43강",
+      "topic": "rest 속성",
+      "question": "rest에 들어 있는 값으로 옳은 것은?",
+      "code": "const item = { id: 1, name: \"cup\", price: 500, stock: 3 };\nconst { id, name, ...rest } = item;",
+      "choices": {
+        "A": "{ price: 500, stock: 3 }",
+        "B": "{ id: 1, name: \"cup\", price: 500, stock: 3 }",
+        "C": "{ stock: 3 }"
+      },
+      "answer": "A",
+      "wrongReasons": {
+        "B": "...rest가 객체 전체를 복사한다고 생각했군요. rest에는 앞에서 꺼낸 속성이 들어가지 않습니다. 43강의 const { cartItem, ...generalInfo } = user 예제에서 generalInfo에 cartItem이 있었는지 떠올려 보세요.",
+        "C": "앞에서 꺼낸 속성이 빠진다는 점은 맞게 봤어요. 하지만 rest는 마지막 속성 하나만 담는 것이 아니라 꺼내지 않은 속성을 모두 모읍니다. 43강의 generalInfo 예제에 속성이 몇 개 들어 있었는지 떠올려 보세요."
+      },
+      "explanation": "...rest는 구조 분해로 꺼내지 않은 나머지 속성을 새 객체로 모읍니다. id와 name을 꺼냈으므로 rest에는 price와 stock이 남아요."
+    },
+    {
+      "id": "s05-q14",
+      "lecture": "44강",
+      "topic": "선택적 중첩 속성",
+      "question": "TypeScript가 오류를 표시하는 줄로 옳은 것은?",
+      "code": "type Member = { name: string; card?: { point: number } };\nconst m: Member = { name: \"Kim\" };\nif (m.card !== undefined) {\n  console.log(m.card.point);\n}\nconsole.log(m.card.point);",
+      "choices": {
+        "A": "1번째 줄",
+        "B": "4번째 줄",
+        "C": "6번째 줄"
+      },
+      "answer": "C",
+      "wrongReasons": {
+        "A": "선택적 속성의 타입으로 객체 타입을 쓰는 것이 문제라고 생각했군요. 선택적 속성에도 객체 타입을 지정할 수 있습니다. 44강의 role?: { hasAllPermissions: boolean } 예제를 떠올려 보세요.",
+        "B": "card가 없을 수 있으니 4번째 줄도 위험하다고 생각했군요. if 문으로 undefined가 아님을 확인한 블록 안에서는 TypeScript가 card가 있다고 판단합니다. 44강에서 session.user !== undefined를 확인한 뒤 session.user에 접근한 예제를 떠올려 보세요."
+      },
+      "explanation": "card는 선택적 속성이라 확인 없이 m.card.point에 접근하는 6번째 줄에서 TS18048 오류가 납니다. 4번째 줄은 if 문으로 undefined가 아님을 확인한 뒤라 오류가 없어요."
+    },
+    {
+      "id": "s05-q15",
+      "lecture": "44강",
+      "topic": "옵셔널 체이닝",
+      "question": "a와 b에 마우스를 올렸을 때 표시되는 타입으로 옳은 것은?",
+      "code": "type Member = { card?: { vip: boolean } };\nconst m: Member = {};\nconst a = m.card?.vip;\nconst b = m.card?.vip ?? false;",
+      "choices": {
+        "A": "a: boolean | undefined, b: boolean",
+        "B": "a: boolean, b: boolean",
+        "C": "a: boolean | undefined, b: boolean | undefined"
+      },
+      "answer": "A",
+      "wrongReasons": {
+        "B": "b는 맞게 봤지만 ?.도 항상 boolean을 돌려준다고 생각했어요. ?.는 왼쪽이 null이나 undefined이면 뒤의 접근을 멈추고 undefined를 반환합니다. 44강의 const checked = session.user?.role?.hasAllPermissions 예제에서 checked의 타입을 떠올려 보세요.",
+        "C": "a는 맞게 봤지만 ??를 붙여도 undefined가 남는다고 생각했어요. ??는 왼쪽이 null이나 undefined일 때 오른쪽 값을 쓰므로 결과에서 undefined가 빠집니다. 44강의 hasPermissions 예제에서 타입이 무엇이었는지 떠올려 보세요."
+      },
+      "explanation": "?.는 card가 없으면 undefined를 반환하므로 a는 boolean | undefined입니다. ?? false는 undefined일 때 false로 바꾸므로 b는 boolean이 돼요."
+    },
+    {
+      "id": "s05-q16",
+      "lecture": "44강",
+      "topic": "??와 ||",
+      "question": "이 코드의 출력 결과로 옳은 것은?",
+      "code": "const stock: number = 0;\nconst nick: string | null = null;\nconsole.log(stock || 5, stock ?? 5, nick ?? \"손님\");",
+      "choices": {
+        "A": "5 0 손님",
+        "B": "5 5 손님",
+        "C": "0 0 손님"
+      },
+      "answer": "A",
+      "wrongReasons": {
+        "B": "null은 맞게 처리했지만 ??도 0을 버린다고 생각했어요. ??는 null과 undefined일 때만 오른쪽 값을 쓰고, 0은 그대로 둡니다. 44강의 count ?? 10 예제가 무엇을 출력했는지 떠올려 보세요.",
+        "C": "??는 맞게 계산했지만 ||도 0을 유지한다고 생각했어요. ||는 0이나 빈 문자열 같은 falsy 값이면 오른쪽 값을 씁니다. 44강의 count || 10 예제가 무엇을 출력했는지 떠올려 보세요."
+      },
+      "explanation": "||는 falsy 값이면 오른쪽을 쓰므로 stock || 5는 5입니다. ??는 null과 undefined일 때만 오른쪽을 쓰므로 stock ?? 5는 0, nick ?? \"손님\"은 손님이에요."
+    },
+    {
+      "id": "s05-q17",
+      "lecture": "45강",
+      "topic": "Non-null 단언",
+      "question": "TypeScript가 오류를 표시하는 줄로 옳은 것은?",
+      "code": "type Box = { item?: { label: string } };\nconst box: Box = { item: { label: \"pen\" } };\nconst a = box.item!.label;\nconst b = box.item.label;\nconst c = box.item?.label;",
+      "choices": {
+        "A": "3번째 줄",
+        "B": "4번째 줄",
+        "C": "5번째 줄"
+      },
+      "answer": "B",
+      "wrongReasons": {
+        "A": "!가 붙은 줄을 문제로 봤군요. !는 값이 null이나 undefined가 아니라고 TypeScript에게 알려서 타입 오류를 없앱니다. 45강의 console.log(session.user!.role) 예제에 오류가 있었는지 떠올려 보세요.",
+        "C": "?.가 붙은 줄을 문제로 봤군요. ?.는 왼쪽이 undefined이면 접근을 멈추고 undefined를 반환하므로 선택적 속성에도 안전하게 쓸 수 있습니다. 44강의 session.user?.role 예제를 떠올려 보세요."
+      },
+      "explanation": "item은 선택적 속성이라 확인 없이 접근하는 4번째 줄에서 TS18048 오류가 납니다. 3번째 줄은 !로 값이 있다고 단언했고, 5번째 줄은 ?.로 안전하게 접근해서 오류가 없어요."
+    },
+    {
+      "id": "s05-q18",
+      "lecture": "45강",
+      "topic": "단언과 실행 오류",
+      "question": "이 코드에 대한 설명으로 옳은 것은?",
+      "code": "type Box = { item?: { label: string } };\nconst box: Box = {};\nconst len = box.item!.label.length;",
+      "choices": {
+        "A": "타입 오류는 없지만 실행하면 TypeError가 난다",
+        "B": "!가 값을 확인하므로 실행하면 len은 undefined가 된다",
+        "C": "item이 없으므로 TypeScript가 3번째 줄에 오류를 표시한다"
+      },
+      "answer": "A",
+      "wrongReasons": {
+        "B": "!가 실행할 때 값을 확인해 준다고 생각했군요. !는 타입 검사만 통과시킬 뿐, 실행 시점에 값이 있는지 확인하지 않습니다. 45강의 session.user!.role!.hasAllPermissions 예제를 실행했을 때 어떻게 됐는지 떠올려 보세요.",
+        "C": "item이 없다는 점은 맞게 봤어요. 하지만 !를 붙이면 TypeScript는 개발자의 단언을 믿고 그 부분을 검사하지 않습니다. 45강의 session.user!.role!.hasAllPermissions 예제에 타입 오류가 있었는지 떠올려 보세요."
+      },
+      "explanation": "!는 값이 있다고 TypeScript에게 알려 타입 오류를 없앨 뿐 실행 시점에 확인하지 않습니다. 실제로 item이 undefined라서 실행하면 TypeError가 나요. 그래서 대부분은 ?.와 ??로 대체값을 지정합니다."
+    },
+    {
+      "id": "s05-q19",
+      "lecture": "46강",
+      "topic": "Object.freeze",
+      "question": "이 코드에 대한 설명으로 옳은 것은?",
+      "code": "const config = Object.freeze({ mode: \"dark\", size: 12 });\nconfig.size = 14;",
+      "choices": {
+        "A": "TypeScript 오류가 나고, 실행 시점에도 size는 수정되지 않는다",
+        "B": "TypeScript 오류는 나지만, 실행하면 size가 14로 바뀐다",
+        "C": "TypeScript 오류 없이 실행되고, size가 14로 바뀐다"
+      },
+      "answer": "A",
+      "wrongReasons": {
+        "B": "TypeScript 오류는 맞게 봤지만 readonly와 헷갈렸어요. Object.freeze는 타입 검사뿐 아니라 실행 시점에도 객체 수정을 막습니다. 46강의 frozen.status = \"unauthenticated\" 예제를 실행했을 때 어떻게 됐는지 떠올려 보세요.",
+        "C": "freeze가 타입 검사에는 영향을 주지 않는다고 생각했군요. Object.freeze가 반환한 객체는 속성이 읽기 전용 타입이 됩니다. 46강의 frozen.status 예제에서 어떤 오류가 났는지 떠올려 보세요."
+      },
+      "explanation": "Object.freeze가 반환한 객체의 속성은 읽기 전용이라 TS2540 오류가 납니다. freeze는 실행 시점에도 수정을 막으므로 size는 12 그대로예요."
+    },
+    {
+      "id": "s05-q20",
+      "lecture": "46강",
+      "topic": "freeze와 중첩 객체",
+      "question": "이 코드의 출력 결과로 옳은 것은?",
+      "code": "const app = Object.freeze({ name: \"shop\", owner: { id: \"u1\" } });\napp.owner.id = \"u2\";\nconsole.log(app.owner.id);",
+      "choices": {
+        "A": "u1",
+        "B": "undefined",
+        "C": "u2"
+      },
+      "answer": "C",
+      "wrongReasons": {
+        "A": "freeze가 안쪽 객체까지 얼린다고 생각했군요. Object.freeze는 바로 그 객체의 속성만 막고, 속성에 담긴 중첩된 객체에는 적용되지 않습니다. 46강의 frozen.user.id = \"id-2\" 예제가 무엇을 출력했는지 떠올려 보세요.",
+        "B": "얼린 객체를 수정하면 값이 사라진다고 생각했군요. 수정이 막히면 원래 값이 남고, 막히지 않으면 새 값으로 바뀔 뿐 값이 없어지지는 않습니다. freeze가 어디까지 적용되는지도 생각해 보세요. 46강의 frozen.user.id 예제를 떠올려 보세요."
+      },
+      "explanation": "Object.freeze는 app의 속성만 막고 owner에 담긴 중첩 객체는 얼리지 않습니다. 그래서 app.owner.id는 오류 없이 u2로 바뀌어요."
+    },
+    {
+      "id": "s05-q21",
+      "lecture": "46강",
+      "topic": "readonly 속성",
+      "question": "3번째 줄의 TypeScript 오류를 무시하고 실행했을 때의 출력 결과로 옳은 것은?",
+      "code": "type Item = { readonly code: string; name: string };\nconst it: Item = { code: \"A1\", name: \"pen\" };\nit.code = \"B2\";\nconsole.log(it.code);",
+      "choices": {
+        "A": "A1",
+        "B": "B2",
+        "C": "TypeError 발생"
+      },
+      "answer": "B",
+      "wrongReasons": {
+        "A": "readonly가 실행할 때도 수정을 막는다고 생각했군요. readonly가 언제 검사되는지 다시 생각해 보세요. readonly는 타입에만 붙는 표시라 JavaScript로 바뀌면 사라집니다. 46강의 user.id = \"id-2\" 예제를 실행했을 때의 출력을 떠올려 보세요.",
+        "C": "Object.freeze와 헷갈렸어요. 실행 시점에도 수정을 막는 것은 freeze이고, readonly는 TypeScript의 타입 검사에서만 수정을 막습니다. 46강의 readonly id 예제를 실행했을 때의 출력을 떠올려 보세요."
+      },
+      "explanation": "readonly는 컴파일 시점에만 검사하므로 TypeScript는 3번째 줄에 TS2540 오류를 표시하지만, 실행하면 code가 B2로 바뀝니다. 실행 시점까지 막으려면 Object.freeze를 써요."
+    }
+  ]
+}
