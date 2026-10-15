@@ -1,0 +1,6 @@
+{
+  displayName: 'John',
+  admin: false,
+  email: 'john@gmail.com',
+  password: '1234'
+}

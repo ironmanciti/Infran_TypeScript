@@ -1,12 +1,21 @@
-const obj = { a: 1, b: 2, c: 3 };
+const map = new Map<string, number>([
+  ["apple", 1],
+  ["banana", 2],
+]);
 
-for (const key in obj) console.log(key);  // a b c
+console.log(map.get("apple"));      // 1
 
-console.log(Object.entries(obj));
+console.log(map.get("kiwi"));       // undefined
 
-Object.entries(obj).forEach(([key, value]) =>
-  console.log(key, value));               // a 1 ...
+map.set("orange", 99);              // 추가
+map.set("banana", 7);               // 같은 키는 값을 덮어씀
 
-console.log(Object.keys(obj));      // [ 'a', 'b', 'c' ]
-console.log(Object.values(obj));    // [ 1, 2, 3 ]
-console.log(Object.entries(obj));   // [ [ 'a', 1 ], [ 'b', 2 ], [ 'c', 3 ] ]
+console.log(map);
+
+console.log(map.has("apple"));      // true
+console.log(map.delete("apple"));   // true
+console.log(map.size);              // 2
+
+map.forEach((value, key) => console.log(key, value));
+// banana 7
+// orange 99

@@ -202,8 +202,8 @@
       ]
     },
     "23": {
-      "lecture": "69강",
-      "title": "제네릭 클래스",
+      "lecture": "68강",
+      "title": "제네릭과 getter, setter",
       "combine": true,
       "parts": [
         {
