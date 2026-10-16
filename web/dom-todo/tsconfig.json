@@ -1,0 +1,5 @@
+{
+  // 실전 응용 문제(할 일 목록)용. 설정은 dom-vite와 같습니다.
+  "extends": "../dom-vite/tsconfig.json",
+  "include": ["src"]
+}

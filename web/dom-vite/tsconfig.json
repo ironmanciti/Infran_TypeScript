@@ -1,0 +1,17 @@
+{
+  // Section 9 DOM 실습용 (Vite vanilla-ts 템플릿 기반)
+  // 의존성(typescript, vite)은 저장소 루트의 package.json에서 설치됩니다.
+  "compilerOptions": {
+    "target": "ES2023",
+    "lib": ["ES2023", "DOM", "DOM.Iterable"],
+    "module": "ESNext",
+    "moduleResolution": "bundler",
+    "moduleDetection": "force",
+    "verbatimModuleSyntax": true,
+    "isolatedModules": true,
+    "noEmit": true,
+    "strict": true,
+    "skipLibCheck": true
+  },
+  "include": ["src"]
+}

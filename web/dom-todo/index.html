@@ -1,0 +1,17 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>할 일 목록</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script type="module" src="/src/main.ts"></script>
+  </head>
+  <body class="bg-neutral-800 p-8 text-neutral-200">
+    <form class="flex gap-4">
+      <input id="todo-input" type="text" placeholder="할 일을 입력하세요" class="flex-1 px-2 py-1 text-black" />
+      <button type="submit" class="bg-blue-500 text-white px-4 py-2">추가</button>
+    </form>
+    <ul id="todo-list" class="mt-4 flex flex-col gap-2"></ul>
+  </body>
+</html>
