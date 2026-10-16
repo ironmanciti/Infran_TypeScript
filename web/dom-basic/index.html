@@ -1,0 +1,23 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>DOM 조작 실습</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+  </head>
+  <body class="bg-neutral-800 p-8">
+    <form class="flex flex-col gap-4">
+      <input id="one" type="number" placeholder="0" />
+      <input id="two" type="number" placeholder="0" />
+      <input id="three" type="number" placeholder="0" />
+      <input id="four" type="number" placeholder="0" />
+      <button type="submit" class="bg-blue-500 text-white px-4 py-2">submit</button>
+    </form>
+    <div class="mt-4">
+      <p id="message" class="text-neutral-200"></p>
+      <p id="max" class="text-neutral-200">Max:</p>
+      <p id="min" class="text-neutral-200">Min:</p>
+    </div>
+  </body>
+</html>

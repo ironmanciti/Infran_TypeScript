@@ -47,3 +47,7 @@ tests/
 
 # Claude Code 강사용 프로젝트 지침 (수강생에게 배포하지 않음)
 CLAUDE.local.md
+
+# 섹션 9 Vite 실습 프로젝트 (수강생이 93강에서 직접 만듦, 배포하지 않음)
+web/dom-vite/
+web/dom-todo/
