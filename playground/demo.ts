@@ -1,21 +1,12 @@
-const map = new Map<string, number>([
-  ["apple", 1],
-  ["banana", 2],
-]);
+type Page = { path: string; label: string };
 
-console.log(map.get("apple"));      // 1
+const pages = [
+  { path: "/", label: "home" },
+  { path: "/dashboard", label: "dashboard" },
+] as const satisfies Page[];
 
-console.log(map.get("kiwi"));       // undefined
+console.log(pages[1].label);   // "dashboard"  ← 구체적인 타입
+pages[1].label = "x";          // 오류: 읽기 전용
 
-map.set("orange", 99);              // 추가
-map.set("banana", 7);               // 같은 키는 값을 덮어씀
-
-console.log(map);
-
-console.log(map.has("apple"));      // true
-console.log(map.delete("apple"));   // true
-console.log(map.size);              // 2
-
-map.forEach((value, key) => console.log(key, value));
-// banana 7
-// orange 99
+const bad = [{ path: "/" }] as const satisfies Page[];
+// 오류 TS2741: Property 'label' is missing
