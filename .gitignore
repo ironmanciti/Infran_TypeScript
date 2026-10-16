@@ -51,3 +51,7 @@ CLAUDE.local.md
 # playground 컴파일 결과와 demo 스킬 상태 파일 (시연 중 생김, 배포하지 않음)
 playground/*.js
 playground/.demo-*
+
+# playground의 강사 풀이 파일 (실전 응용 문제는 수강생이 직접 품). demo.ts만 배포
+playground/*.ts
+!playground/demo.ts
