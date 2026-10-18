@@ -1,0 +1,19 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" href="data:," />
+    <title>DOM 조작 실습 (클라이언트 사이드 렌더링)</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script type="module" src="/src/main.ts"></script>
+  </head>
+  <body class="bg-neutral-800 p-8">
+    <!-- form은 HTML에 없습니다. 91강에서 TypeScript 코드로 만들어 이 div 앞에 넣습니다. -->
+    <div class="mt-4">
+      <p id="message" class="text-neutral-200"></p>
+      <p id="max" class="text-neutral-200">Max:</p>
+      <p id="min" class="text-neutral-200">Min:</p>
+    </div>
+  </body>
+</html>

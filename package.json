@@ -2,6 +2,7 @@
   "type": "module",
   "scripts": {
     "dev": "vite web/dom-vite",
+    "dev:csr": "vite web/dom-csr",
     "dev:todo": "vite web/dom-todo"
   },
   "devDependencies": {
