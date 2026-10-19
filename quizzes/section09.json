@@ -1,0 +1,169 @@
+{
+  "section": "09",
+  "title": "Section 9. DOM 조작",
+  "version": "1.0.0",
+  "questions": [
+    {
+      "id": "s09-q1",
+      "lecture": "85강",
+      "topic": "module 스크립트",
+      "question": "head에 있는 스크립트가 body의 요소를 찾을 수 있는 이유로 옳은 것은?",
+      "code": "<head>\n  <script type=\"module\" src=\"/src/main.ts\"></script>\n</head>\n<body>\n  <input id=\"one\" type=\"number\" />",
+      "choices": {
+        "A": "Vite가 main.ts를 변환하면서 script 태그를 body 뒤로 옮겨 주기 때문이다",
+        "B": "type이 module인 스크립트는 HTML 파싱이 끝난 뒤 실행되기 때문이다",
+        "C": "src가 루트 기준 경로라서 브라우저가 문서를 모두 읽은 뒤 요청하기 때문이다"
+      },
+      "answer": "B",
+      "wrongReasons": {
+        "A": "Vite가 main.ts를 JavaScript로 바꿔 준다는 점은 맞게 기억했어요. 하지만 Vite는 변환만 할 뿐 script 태그의 위치나 실행 순서는 바꾸지 않습니다. 85강 index.html 슬라이드의 아래 카드에서 main.ts가 언제 실행된다고 했는지 떠올려 보세요.",
+        "C": "src 경로는 파일을 어디서 가져올지만 정할 뿐 실행 시점과는 관계가 없어요. 실행 시점을 정하는 것은 script 태그의 다른 속성입니다. 85강 index.html 슬라이드의 아래 카드에서 main.ts가 실행되는 시점을 어떻게 설명했는지 떠올려 보세요."
+      },
+      "explanation": "type이 module인 스크립트는 HTML 파싱이 끝난 뒤 실행됩니다. 그래서 head에 있어도 main.ts가 실행될 때는 body의 요소가 모두 만들어져 있어요."
+    },
+    {
+      "id": "s09-q2",
+      "lecture": "86강",
+      "topic": "null 처리 읽기",
+      "question": "실행할 때 요소가 실제로 있는지 확인하는 줄만 고른 것은?",
+      "code": "const form = document.querySelector(\"form\");\nif (!form) throw new Error(\"form 없음\");\nconst button = document.querySelector(\"button\")!;\nconst submit = document.querySelector(\"#submit\") as HTMLButtonElement;\nconst text = document.querySelector(\"#message\")?.textContent;",
+      "choices": {
+        "A": "2번째 줄과 5번째 줄",
+        "B": "2번째 줄과 3번째 줄",
+        "C": "2번째, 3번째, 4번째 줄"
+      },
+      "answer": "A",
+      "wrongReasons": {
+        "B": "if 문이 실제로 확인한다는 건 맞게 생각했어요. 하지만 느낌표는 null이 아니라고 TypeScript에 약속만 할 뿐 실행할 때 아무것도 검사하지 않습니다. 86강 AI 코드 null 처리 슬라이드에서 선택자를 잘못 쓰면 느낌표 코드가 어떻게 된다고 했는지 떠올려 보세요.",
+        "C": "느낌표와 as도 null을 없애 주니 확인한다고 봤군요. 두 문법은 타입만 바꿀 뿐 실제 값은 검사하지 않고, 실제로 확인하는 문법이 하나 빠졌습니다. 86강 AI 코드 null 처리 슬라이드의 네 번째 방법이 message가 null일 때 어떻게 동작했는지 떠올려 보세요."
+      },
+      "explanation": "if 문(2번째 줄)은 form이 없으면 오류를 던지고, 옵셔널 체이닝(5번째 줄)은 null이면 멈추고 undefined를 돌려주므로 둘 다 실행할 때 확인합니다. 느낌표와 as는 타입만 바꾸므로 요소가 없으면 TypeScript는 아무 말 없다가 실행 시점에 TypeError가 날 수 있어요."
+    },
+    {
+      "id": "s09-q3",
+      "lecture": "87강",
+      "topic": "NodeList",
+      "question": "TypeScript가 오류를 표시하는 줄로 옳은 것은?",
+      "code": "const inputs = document.querySelectorAll(\"input\");\ninputs.forEach((input) => (input.value = \"0\"));\nconst count = inputs.length;\nconst values = inputs.map((input) => input.value);",
+      "choices": {
+        "A": "2번째 줄: NodeList에는 forEach가 없다",
+        "B": "3번째 줄: NodeList에는 length가 없다",
+        "C": "4번째 줄: NodeList에는 map이 없다"
+      },
+      "answer": "C",
+      "wrongReasons": {
+        "A": "NodeList가 일반 배열이 아니라는 점은 정확히 알고 있어요. 하지만 NodeList에도 쓸 수 있는 메서드가 몇 가지 있습니다. 87강 querySelectorAll 슬라이드의 오른쪽 카드에서 NodeList로 쓸 수 있다고 한 것과 없다고 한 것을 떠올려 보세요.",
+        "B": "length는 배열에만 있다고 생각했군요. NodeList는 배열은 아니지만 목록의 개수를 알려 주는 속성은 갖고 있습니다. 87강 querySelectorAll 슬라이드의 오른쪽 카드에서 사용할 수 있다고 한 세 가지를 떠올려 보세요."
+      },
+      "explanation": "NodeList는 forEach, length, entries는 쓸 수 있지만 map, filter, reduce는 없어서 4번째 줄에 Property 'map' does not exist 오류가 납니다. map을 쓰려면 [...inputs]나 Array.from(inputs)로 먼저 배열로 바꿔야 해요."
+    },
+    {
+      "id": "s09-q4",
+      "lecture": "88강",
+      "topic": "onchange와 리스너",
+      "question": "input의 값을 바꿨을 때 콘솔에 출력되는 결과로 옳은 것은?",
+      "code": "const input = document.querySelector(\"input\")!;\ninput.onchange = () => console.log(\"A\");\ninput.onchange = () => console.log(\"B\");\ninput.addEventListener(\"change\", () => console.log(\"L1\"));\ninput.addEventListener(\"change\", () => console.log(\"L2\"));",
+      "choices": {
+        "A": "A, B, L1, L2",
+        "B": "B, L1, L2",
+        "C": "B, L2"
+      },
+      "answer": "B",
+      "wrongReasons": {
+        "A": "addEventListener가 리스너를 쌓아 둔다는 건 맞게 생각했어요. 하지만 onchange는 속성이라 함수를 하나만 담을 수 있어서 새 함수를 할당하면 이전 함수는 사라집니다. 88강 onchange와 addEventListener 비교 슬라이드에서 onchange에 두 번 할당했을 때 어느 쪽이 남았는지 떠올려 보세요.",
+        "C": "addEventListener도 onchange처럼 마지막 것만 남는다고 생각했군요. addEventListener는 이름 그대로 리스너를 추가하므로 등록한 함수가 모두 실행됩니다. 88강 비교 슬라이드에서 같은 코드를 세 번 작성하면 리스너가 몇 개 등록된다고 했는지 떠올려 보세요."
+      },
+      "explanation": "onchange는 속성이라 마지막에 할당한 B만 남고 A는 교체됩니다. addEventListener는 리스너를 추가하므로 L1과 L2가 모두 실행되어 B, L1, L2가 출력돼요."
+    },
+    {
+      "id": "s09-q5",
+      "lecture": "89강",
+      "topic": "Math.max와 spread",
+      "question": "코드를 실행했을 때 출력되는 결과로 옳은 것은?",
+      "code": "const numbers = [5, 3, 21, 1];\nconsole.log(Math.max(numbers));\nconsole.log(Math.max(...numbers), Math.min(...numbers));",
+      "choices": {
+        "A": "NaN, 21 1",
+        "B": "21, 21 1",
+        "C": "5, 21 1"
+      },
+      "answer": "A",
+      "wrongReasons": {
+        "B": "Math.max가 배열 안에서 최댓값을 찾아 준다고 생각했군요. Math.max는 여러 개의 인자를 받는 함수라서 배열 하나를 그대로 넘기면 숫자로 바꿀 수 없습니다. 89강 과제 2의 검토 포인트에서 배열을 그대로 전달하면 무엇을 돌려준다고 했는지 떠올려 보세요.",
+        "C": "배열의 첫 번째 값만 쓰인다고 생각했군요. Math.max는 배열을 펼쳐 주지 않고 배열 하나를 통째로 숫자로 바꾸려다 실패합니다. 89강 과제 2에서 spread로 펼쳤는지를 왜 검토했는지 떠올려 보세요."
+      },
+      "explanation": "Math.max는 여러 인자를 받으므로 배열 하나를 그대로 넘기면 NaN을 돌려줍니다. spread 연산자로 펼쳐 넘겨야 21과 1이 나와요. TypeScript라면 2번째 줄에 타입 오류도 표시됩니다."
+    },
+    {
+      "id": "s09-q6",
+      "lecture": "90강",
+      "topic": "classList",
+      "question": "코드를 실행한 뒤 max.className의 값으로 옳은 것은?",
+      "code": "const max = document.querySelector(\"#max\")!;\nmax.className = \"text-lg text-neutral-200\";\nmax.classList.remove(\"text-neutral-200\");\nmax.classList.add(\"text-red-500\");",
+      "choices": {
+        "A": "\"text-red-500\"",
+        "B": "\"text-lg text-neutral-200 text-red-500\"",
+        "C": "\"text-lg text-red-500\""
+      },
+      "answer": "C",
+      "wrongReasons": {
+        "A": "add가 class 전체를 새 값으로 바꾼다고 생각했군요. classList는 class 속성값을 공백으로 나눈 토큰 목록으로 다루므로 add와 remove는 지정한 토큰 하나만 더하거나 뺍니다. 90강 classList 슬라이드에서 콘솔에 출력한 DOMTokenList가 클래스를 어떻게 나눠 보여 줬는지 떠올려 보세요.",
+        "B": "add가 토큰을 덧붙인다는 건 맞게 생각했어요. 하지만 그 앞 줄의 remove도 지정한 토큰을 실제로 목록에서 빼냅니다. 90강 classList 슬라이드에서 Max 단락을 빨간색으로 만들 때 remove를 먼저 호출한 이유를 떠올려 보세요."
+      },
+      "explanation": "remove는 text-neutral-200 토큰만 빼고, add는 text-red-500을 끝에 더합니다. 다른 토큰인 text-lg는 그대로 남아서 \"text-lg text-red-500\"이 돼요."
+    },
+    {
+      "id": "s09-q7",
+      "lecture": "91강",
+      "topic": "삽입 위치",
+      "question": "주석 자리에 넣었을 때 form을 div 바로 앞에 넣는 코드로 옳은 것은?",
+      "code": "const form = document.createElement(\"form\");\nconst div = document.querySelector(\"div\")!;\n// 여기에 form을 div 바로 앞에 넣는 코드",
+      "choices": {
+        "A": "document.body.insertBefore(form, div);",
+        "B": "document.body.insertBefore(div, form);",
+        "C": "div.after(form);"
+      },
+      "answer": "A",
+      "wrongReasons": {
+        "B": "insertBefore를 고른 건 좋았어요. 다만 인자 두 개의 순서가 바뀌었습니다. 91강 요소의 삽입 위치 슬라이드의 오른쪽 카드에서 넣을 요소와 기준 요소 중 무엇이 먼저라고 했는지 떠올려 보세요.",
+        "C": "기준 요소에 직접 호출하는 방식을 떠올린 건 맞아요. 하지만 이 메서드는 이름 그대로 기준 요소의 반대쪽에 넣습니다. 91강 요소의 삽입 위치 표에서 ref.before와 ref.after가 각각 어디에 넣는다고 했는지 떠올려 보세요."
+      },
+      "explanation": "insertBefore는 넣을 요소를 먼저, 기준 요소를 나중에 받으므로 body.insertBefore(form, div)가 form을 div 앞에 넣습니다. div.before(form)도 같은 결과지만 div.after(form)은 div 뒤에 넣어요."
+    },
+    {
+      "id": "s09-q8",
+      "lecture": "92강",
+      "topic": "named import",
+      "question": "TypeScript가 오류를 표시하는 줄로 옳은 것은?",
+      "code": "// elements.ts\nexport const message = document.querySelector(\"#message\");\n// main.ts\nimport { message } from \"./elements\";\nimport max from \"./elements\";",
+      "choices": {
+        "A": "2번째 줄: export는 선언 앞에 붙일 수 없다",
+        "B": "4번째 줄: 가져올 이름을 중괄호로 감쌀 수 없다",
+        "C": "5번째 줄: elements.ts에는 default export가 없다"
+      },
+      "answer": "C",
+      "wrongReasons": {
+        "A": "export 위치가 낯설었군요. named export는 선언 앞에 export를 붙이는 방식과 파일 끝에서 중괄호로 묶는 방식을 모두 쓸 수 있습니다. 92강 모듈로 파일 나누기 슬라이드의 elements.ts에서 각 선언 앞에 무엇이 붙어 있었는지 떠올려 보세요.",
+        "B": "중괄호의 뜻을 반대로 기억했네요. named로 내보낸 것은 중괄호 안에 이름을 그대로 써서 가져옵니다. 92강 named export와 default export 표에서 중괄호가 있을 때와 없을 때를 어떻게 구분했는지 떠올려 보세요."
+      },
+      "explanation": "elements.ts는 named export만 하고 default export가 없으므로, 중괄호 없이 가져오는 5번째 줄에서 has no default export 오류가 납니다. named로 내보낸 것은 4번째 줄처럼 중괄호 안에 이름 그대로 가져와요."
+    },
+    {
+      "id": "s09-q9",
+      "lecture": "93강",
+      "topic": "classList.toggle",
+      "question": "할 일 항목을 두 번 클릭한 뒤 li의 상태로 옳은 것은?",
+      "code": "const li = document.createElement(\"li\");\nli.textContent = \"장보기\";\nli.addEventListener(\"click\", () => {\n  li.classList.toggle(\"line-through\");\n});",
+      "choices": {
+        "A": "line-through가 두 번 추가되어 취소선이 그대로 있다",
+        "B": "line-through가 추가됐다가 빠져서 취소선이 없다",
+        "C": "line-through가 한 번만 추가되어 취소선이 그대로 있다"
+      },
+      "answer": "B",
+      "wrongReasons": {
+        "A": "클릭할 때마다 클래스가 하나씩 쌓인다고 생각했군요. classList는 같은 토큰을 중복해서 담지 않고, toggle은 토큰의 유무에 따라 다르게 동작합니다. 93강 실전 응용 문제에서 추가된 항목을 클릭하면 취소선이 어떻게 된다고 했는지 떠올려 보세요.",
+        "C": "같은 토큰이 중복해서 들어가지 않는다는 건 맞게 생각했어요. 하지만 toggle은 add와 달리 이미 있는 토큰을 만나면 그대로 두지 않습니다. 93강 실전 응용 문제에서 완료 표시에 add가 아니라 classList.toggle을 쓰게 한 이유를 떠올려 보세요."
+      },
+      "explanation": "toggle은 토큰이 없으면 넣고 있으면 뺍니다. 첫 클릭에 line-through가 들어가 취소선이 생기고, 두 번째 클릭에 빠져서 취소선이 사라져요."
+    }
+  ]
+}
