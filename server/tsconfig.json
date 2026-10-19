@@ -1,0 +1,17 @@
+{
+  // Section 10 Express 서버용 (Node.js, ES 모듈)
+  // typescript는 저장소 루트 package.json의 것을 사용합니다.
+  "compilerOptions": {
+    "target": "ES2023",
+    "module": "NodeNext",
+    "moduleResolution": "NodeNext",
+    "outDir": "dist",
+    "rootDir": "src",
+    "strict": true,
+    "verbatimModuleSyntax": true,
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "types": ["node"]
+  },
+  "include": ["src/**/*.ts"]
+}
