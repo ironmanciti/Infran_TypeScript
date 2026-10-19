@@ -1,15 +1,9 @@
 {
   "type": "module",
-  "workspaces": [
-    "server",
-    "todo-api"
-  ],
   "scripts": {
     "dev": "vite web/dom-vite",
     "dev:csr": "vite web/dom-csr",
-    "dev:todo": "vite web/dom-todo",
-    "dev:server": "npm run dev -w server",
-    "dev:api": "npm run dev -w todo-api"
+    "dev:todo": "vite web/dom-todo"
   },
   "devDependencies": {
     "typescript": "^7.0.2",
