@@ -147,8 +147,10 @@ export function writeDemo(code, target, { append = false } = {}) {
 // 테스트에서는 환경 변수 DEMO_NO_OPEN으로 열지 않게 합니다.
 export function openInEditor(target) {
   if (process.env.DEMO_NO_OPEN) return false;
-  // Windows의 code는 code.cmd라서 셸을 거쳐야 실행됩니다.
-  const r = spawnSync("code", ["-r", target], { stdio: "ignore", shell: process.platform === "win32" });
+  // Windows의 code는 code.cmd라서 cmd.exe로 실행합니다. (shell: true에 인자를 넘기면 Node가 DEP0190 경고를 냄)
+  const r = process.platform === "win32"
+    ? spawnSync(process.env.ComSpec ?? "cmd.exe", ["/d", "/c", "code", "-r", target], { stdio: "ignore" })
+    : spawnSync("code", ["-r", target], { stdio: "ignore" });
   return r.status === 0;
 }
 
