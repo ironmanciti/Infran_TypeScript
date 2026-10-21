@@ -7,7 +7,7 @@ description: TypeScript 강의 슬라이드에 맞는 표준 시연 코드(.demo
 
 강의 슬라이드마다 미리 검증해 둔 표준 코드를 파일에 쓴다. 모든 수강생이 **같은 코드**를 받아야 하므로 코드를 새로 만들거나 고치지 않는다.
 
-이 스킬은 Claude Code(`/demo`), Codex(`$demo`), Gemini CLI(`/demo`, `.gemini/commands/demo.toml`)에서 똑같이 동작하고, "슬라이드 3-4 코드 써 줘"처럼 말로 요청해도 된다. 모든 작업은 아래의 `node` 명령 한 줄로 하며, 운영 체제나 셸에 따라 명령을 바꾸지 않는다.
+이 스킬은 Claude Code(`/demo`), Codex(`$demo`), Antigravity(`/demo`, `.agents/workflows/demo.md`)에서 똑같이 동작하고, "슬라이드 3-4 코드 써 줘"처럼 말로 요청해도 된다. 모든 작업은 아래의 `node` 명령 한 줄로 하며, 운영 체제나 셸에 따라 명령을 바꾸지 않는다.
 
 ## 1. 인자 해석
 

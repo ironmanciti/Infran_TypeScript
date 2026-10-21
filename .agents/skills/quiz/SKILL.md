@@ -8,7 +8,7 @@ description: TypeScript 강의의 표준 퀴즈(quizzes/sectionNN.json)를 한 �
 모든 수강생이 **같은 문제, 같은 해설**로 학습하도록 진행하는 퀴즈다.
 문제와 해설은 모두 JSON 파일에 정해져 있다. **AI가 문제나 해설을 새로 만들지 않는다.**
 
-이 스킬은 Claude Code(`/quiz`), Codex(`$quiz`), Gemini CLI(`/quiz`, `.gemini/commands/quiz.toml`)에서 똑같이 동작하고, "섹션 2 퀴즈 내줘"처럼 말로 요청해도 된다. 진행 상황 저장은 아래의 `node` 명령으로만 하며, 운영 체제나 셸에 따라 명령을 바꾸지 않는다.
+이 스킬은 Claude Code(`/quiz`), Codex(`$quiz`), Antigravity(`/quiz`, `.agents/workflows/quiz.md`)에서 똑같이 동작하고, "섹션 2 퀴즈 내줘"처럼 말로 요청해도 된다. 진행 상황 저장은 아래의 `node` 명령으로만 하며, 운영 체제나 셸에 따라 명령을 바꾸지 않는다.
 
 ## 1. 문제 파일 찾기
 
