@@ -1,0 +1,9 @@
+# Gemini CLI 사용자 정의 명령: /demo <키> [파일] [append] [run], /demo list [섹션], /demo next
+# demo 스킬 지침(.agents/skills/demo/SKILL.md)을 그대로 불러와 진행합니다.
+description = "슬라이드 시연 코드 쓰기 (예: /demo 3-4, /demo next, /demo list 3)"
+prompt = """
+아래 demo 스킬 지침을 그대로 따라 진행해 줘.
+사용자 요청: /demo {{args}}
+
+@{.agents/skills/demo/SKILL.md}
+"""

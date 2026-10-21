@@ -1,0 +1,9 @@
+# Gemini CLI 사용자 정의 명령: /quiz [섹션 번호]
+# quiz 스킬 지침(.agents/skills/quiz/SKILL.md)을 그대로 불러와 진행합니다.
+description = "강의 복습 퀴즈 (예: /quiz 2)"
+prompt = """
+아래 quiz 스킬 지침을 그대로 따라 진행해 줘.
+사용자 요청: /quiz {{args}}
+
+@{.agents/skills/quiz/SKILL.md}
+"""
