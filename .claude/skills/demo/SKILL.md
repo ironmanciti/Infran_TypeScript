@@ -1,15 +1,17 @@
 ---
 name: demo
-description: TypeScript 강의 슬라이드에 맞는 표준 시연 코드(.demos/sectionNN)를 VS Code 파일에 그대로 써 준다. "3-9"처럼 섹션-슬라이드 번호를 받고, "2"처럼 섹션 번호만 주면 그 섹션의 첫 슬라이드부터 시작한다. 사용자가 "/demo 3-9", "/demo 2", "/demo list 2", "/demo next", "슬라이드 3-9 코드", "3-28-2 보여줘", "데모 코드", "시연 코드" 같은 요청을 하면 사용한다. "/demo 설명", "설명 읽어줘", "설명해줘"이면 데모 코드를 한 줄씩 짚으며 한국어 음성으로 설명한다.
+description: TypeScript 강의 슬라이드에 맞는 표준 시연 코드(.demos/sectionNN)를 VS Code 파일에 그대로 써 준다. "3-9"처럼 섹션-슬라이드 번호를 받고, "2"처럼 섹션 번호만 주면 그 섹션의 첫 슬라이드부터 시작한다. 사용자가 "슬라이드 3-9 코드", "3-28-2 보여줘", "데모 코드", "시연 코드", "다음 데모", "/demo 3-9", "$demo 3-9", "demo list 2" 같은 요청을 하면 사용한다.
 ---
 
 # demo — 슬라이드 시연 코드 쓰기
 
 강의 슬라이드마다 미리 검증해 둔 표준 코드를 파일에 쓴다. 모든 수강생이 **같은 코드**를 받아야 하므로 코드를 새로 만들거나 고치지 않는다.
 
+이 스킬은 Claude Code(`/demo`), Codex(`$demo`), Gemini CLI(자연어 요청)에서 똑같이 동작한다. 모든 작업은 아래의 `node` 명령 한 줄로 하며, 운영 체제나 셸에 따라 명령을 바꾸지 않는다.
+
 ## 1. 인자 해석
 
-`/demo <키> [파일] [append] [run]`
+`demo <키> [파일] [append] [run]` (앞에 `/` 또는 `$`가 붙어도 같다)
 
 | 인자 | 뜻 | 예 |
 |---|---|---|
@@ -18,25 +20,24 @@ description: TypeScript 강의 슬라이드에 맞는 표준 시연 코드(.demo
 | `append` | 기존 내용을 지우지 않고 아래에 덧붙임 (없으면 전체 교체) | |
 | `run` | 쓴 뒤 바로 실행해 결과를 보여 줌 | |
 
-- 키가 없으면 `node .claude/skills/demo/scripts/demo.mjs list`를 실행해 목록만 보여 주고 끝낸다.
-- `/demo list [섹션]` (예: `/demo list 2`, "섹션 2 데모 목록")이면 `node .claude/skills/demo/scripts/demo.mjs list <섹션>`을 실행해 그 섹션의 목록만 보여 주고 끝낸다. 섹션이 없으면 전체 목록이다.
-- `/demo next`, `/demo 다음`, 또는 "다음", "next"라고만 하면 키 자리에 `next`를 그대로 넘긴다(`show next`). 스크립트가 마지막으로 보여 준 슬라이드(`playground/.demo-last`)의 다음 슬라이드를 찾아 준다.
-- `/demo 설명 [키] [파일]`, "설명 읽어줘", "설명해줘"이면 코드를 쓰지 않고 **6. 설명 읽어 주기**만 한다.
+- 키가 없으면 `node .agents/skills/demo/scripts/demo.mjs list`를 실행해 목록만 보여 주고 끝낸다.
+- `demo list [섹션]` (예: "섹션 2 데모 목록")이면 `node .agents/skills/demo/scripts/demo.mjs list <섹션>`을 실행해 그 섹션의 목록만 보여 주고 끝낸다. 섹션이 없으면 전체 목록이다.
+- `demo next`, `demo 다음`, 또는 "다음", "next"라고만 하면 키 자리에 `next`를 그대로 넘긴다. 스크립트가 마지막으로 보여 준 슬라이드(`playground/.demo-last`)의 다음 슬라이드를 찾아 준다.
 
-## 2·3. 코드 가져와 파일에 쓰기 (명령 한 번)
+## 2. 코드 가져와 파일에 쓰기 (명령 한 번)
 
-빠르게 처리하려고 **PowerShell 명령 한 번**으로 가져오기·쓰기·열기를 모두 한다. 원본 파일을 스크립트가 그대로 복사하므로 Read·Write 도구와 `check`는 쓰지 않는다.
+아래 명령 한 줄로 코드 찾기, 파일 쓰기, VS Code에서 열기를 모두 한다. 원본 파일을 스크립트가 그대로 복사하므로 파일을 직접 읽거나 쓰지 않는다.
 
 ```
-$j = node .claude/skills/demo/scripts/demo.mjs show <키> | Out-String; if ($LASTEXITCODE -ne 0) { $j; exit 1 }; $d = $j | ConvertFrom-Json; node .claude/skills/demo/scripts/demo.mjs write $d.key <파일> [--append]; code -r <파일>; $j
+node .agents/skills/demo/scripts/demo.mjs open <키> [파일] [--append]
 ```
 
-- `<키>`에는 사용자가 준 키나 `next`를 그대로 넣는다. `<파일>`이 없으면 `playground/demo.ts`.
-- 출력의 JSON으로 4의 보고를 쓴다. 실패하면(코드가 없는 슬라이드 등) 오류 메시지를 그대로 전하고 멈춘다.
-- `code -r`이 없거나 실패해도 무시한다.
+- `<키>`에는 사용자가 준 키나 `next`를 그대로 넣는다. `[파일]`이 없으면 `playground/demo.ts`에 쓴다.
+- 출력은 JSON이다. 이것으로 3의 보고를 쓴다. 종료 코드가 0이 아니면(코드가 없는 슬라이드 등) 오류 메시지를 그대로 전하고 멈춘다.
+- `opened`가 false면 VS Code의 `code` 명령이 없는 것이다. 파일은 이미 써졌으므로 무시하고, 보고 끝에 "파일을 직접 열어 주세요"라고 한 줄 덧붙인다.
 - 코드를 직접 옮겨 적거나 고치지 않는다(주석 추가, 들여쓰기 변경, 개선 모두 금지).
 
-## 4. 보고
+## 3. 보고
 
 짧게, 아래 형식으로만 쓴다.
 
@@ -52,41 +53,19 @@ $j = node .claude/skills/demo/scripts/demo.mjs show <키> | Out-String; if ($LAS
 짝수
 ```
 실행: `node playground/demo.ts`
-다음: `/demo 3-11`
+다음: `demo 3-11`
 ````
 
 - 제목 괄호에는 `parts`의 label을 쓴다. 부분이 하나면 괄호를 생략한다. 부분 키(`3-28-2`)면 `(과제 2 / 전체 3개)`처럼 쓴다.
+- 파일 링크에는 JSON의 `file`을 쓴다.
 - 예상 출력은 `output`을 그대로 쓰되 10줄이 넘으면 앞 5줄 뒤에 `... (총 N줄)`로 줄인다. 비어 있으면 "출력 없음"이라고 쓴다.
 - `note`가 있으면 ⚠ 표시와 함께 한 줄로 적는다.
 - `expectErrors`가 있으면 "tsc 타입 검사에서 TS2678 오류가 납니다"처럼 알린다.
 - `next`가 null이면 `다음:` 줄을 쓰지 않는다.
 - `run`이 있으면 `node <파일>`을 실행하고 예상 출력 대신 실제 출력을 보여 준다.
 
-## 5. 하지 않는 것
+## 4. 하지 않는 것
 
-- `.demos/` 폴더의 원본 파일과 `.claude/skills/demo/scripts/demo.mjs`는 고치지 않는다.
-- points 외의 긴 설명을 덧붙이지 않는다. 설명은 강사가 한다. (단, 6의 설명 읽어 주기는 예외)
+- `.demos/` 폴더의 원본 파일과 `.agents/skills/demo/scripts/demo.mjs`는 고치지 않는다.
+- points 외의 긴 설명을 덧붙이지 않는다. 설명은 강사가 한다.
 - 사용자가 요청하지 않으면 코드를 실행하지 않는다(`run` 인자 제외).
-
-## 6. 설명 읽어 주기
-
-`/demo 설명 [파일]`, "설명 읽어줘", "설명해줘". 파일에 **지금 들어 있는 코드**를 한 줄씩 VS Code 커서로 짚으면서 한국어 음성으로 설명한다. 설명 문장은 매번 새로 만든다(그때그때 표현이 달라도 된다). 절차는 항상 같게 한다.
-
-1. 파일이 없으면 `playground/demo.ts`. 파일을 읽는다. 비어 있으면 "설명할 코드가 없습니다"라고 하고 멈춘다.
-2. 참고 자료: `playground/.demo-last`의 키로 `show <키>`를 실행하고, `check <키> <파일>`이 `일치`면 `points`·`output`·`note`를 설명에 활용한다. 불일치거나 키가 없으면 코드만 보고 설명한다.
-3. 아래 규칙대로 원고를 써서 `playground/.demo-narration.txt`에 덮어쓴다(Write 도구, UTF-8).
-4. 원고의 행마다 순서대로 아래를 반복한다(대화창 글과 음성이 함께 나가도록):
-   1. 대화창에 `**[줄번호]** 설명` 한 줄을 텍스트로 쓴다.
-   2. 같은 응답에서 바로 그 줄만 읽는다:
-      ```
-      powershell -ExecutionPolicy Bypass -File .claude/skills/demo/scripts/narrate.ps1 -File <파일> -Narration playground/.demo-narration.txt -Line <줄번호>
-      ```
-5. 다 읽으면 "설명 끝"이라고만 쓴다. 표나 다른 설명은 덧붙이지 않는다.
-
-### 원고 작성 규칙
-
-- 한 행에 `줄번호|설명` 하나. 줄 번호는 파일의 실제 줄 번호. 빈 줄·주석만 있는 줄은 건너뛴다.
-- 첫 행은 "첫 번째 줄입니다."로 시작한다. 각 설명은 1~2문장, 존댓말(~입니다).
-- 그 줄이 하는 일 → 결과값 순서로 말한다. 참고 자료가 있으면 결과값을 `output`과 맞추고 `points` 내용을 해당 줄에 녹인다.
-- 기호는 소리 내기 좋게 바꾼다: `+` 더하기, `-` 빼기, `*` 곱하기, `/` 나누기, `%` 퍼센트, `**` 별 두 개, `^` 캐럿, `===` 같음 비교, `=>` 화살표, `${}` 달러 중괄호, 음수 `-5` 마이너스 5.
-- 영어 키워드(`const`, `let`, `console.log`)와 변수명은 그대로 둔다.

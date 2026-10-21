@@ -1,8 +1,8 @@
 // 퀴즈 진행 상황 저장 도구 (quiz 스킬이 중단한 곳부터 이어서 풀 때 사용)
 // 실행:
-//   node .claude/skills/quiz/scripts/quiz-progress.mjs show 3                                  저장된 진행 상황을 JSON으로 출력
-//   node .claude/skills/quiz/scripts/quiz-progress.mjs save 3 --next 13 --attempt 0 --results O,O,R,X,P   진행 상황 저장
-//   node .claude/skills/quiz/scripts/quiz-progress.mjs clear 3                                 진행 상황 삭제
+//   node .agents/skills/quiz/scripts/quiz-progress.mjs show 3                                  저장된 진행 상황을 JSON으로 출력
+//   node .agents/skills/quiz/scripts/quiz-progress.mjs save 3 --next 13 --attempt 0 --results O,O,R,X,P   진행 상황 저장
+//   node .agents/skills/quiz/scripts/quiz-progress.mjs clear 3                                 진행 상황 삭제
 //
 // results 기호: O = 첫 시도에 정답, R = 두 번째 시도에 정답, X = 두 번 틀림, P = 풀지 않고 통과
 // next: 지금 풀 문제의 순번(0부터). attempt: 그 문제에서 이미 틀린 횟수(0 또는 1)
@@ -96,7 +96,7 @@ function main([command, section, ...rest]) {
     if (command === "show") out = loadProgress(section);
     else if (command === "save") out = saveProgress(section, parseSaveArgs(rest));
     else if (command === "clear") out = clearProgress(section);
-    else throw new Error("사용법: node .claude/skills/quiz/scripts/quiz-progress.mjs show|save|clear <섹션> [--next N --attempt 0|1 --results O,R,X,P]");
+    else throw new Error("사용법: node .agents/skills/quiz/scripts/quiz-progress.mjs show|save|clear <섹션> [--next N --attempt 0|1 --results O,R,X,P]");
     console.log(JSON.stringify(out));
   } catch (e) {
     console.error(e.message);

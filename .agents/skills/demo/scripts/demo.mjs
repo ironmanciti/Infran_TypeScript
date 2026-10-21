@@ -1,13 +1,14 @@
 // 강의 시연용 슬라이드 코드(.demos/sectionNN) 도구
 // 실행:
-//   node .claude/skills/demo/scripts/demo.mjs show 3-9            슬라이드 코드와 설명을 JSON으로 출력
+//   node .agents/skills/demo/scripts/demo.mjs show 3-9            슬라이드 코드와 설명을 JSON으로 출력
 //     키 대신 섹션 번호만 주면(예: show 3) 그 섹션의 첫 슬라이드를 씀
 //     키 대신 next(또는 다음)를 주면 마지막으로 보여 준 슬라이드의 다음 슬라이드를 씀
-//   node .claude/skills/demo/scripts/demo.mjs write 3-9 [파일]    코드를 파일에 그대로 씀 (기본: playground/demo.ts)
-//   node .claude/skills/demo/scripts/demo.mjs check 3-9 [파일]    파일 내용이 원본 코드와 같은지 확인
+//   node .agents/skills/demo/scripts/demo.mjs write 3-9 [파일]    코드를 파일에 그대로 씀 (기본: playground/demo.ts)
+//   node .agents/skills/demo/scripts/demo.mjs open 3-9 [파일]     show + write + VS Code에서 열기를 한 번에 (next도 가능)
+//   node .agents/skills/demo/scripts/demo.mjs check 3-9 [파일]    파일 내용이 원본 코드와 같은지 확인
 //     write, check 뒤에 --append를 붙이면 기존 내용 아래에 덧붙이는 방식으로 동작
-//   node .claude/skills/demo/scripts/demo.mjs verify [03]         모든 데모 코드를 타입 검사하고 실행해 예상 출력과 비교
-//   node .claude/skills/demo/scripts/demo.mjs list [03]           데모가 있는 슬라이드 목록
+//   node .agents/skills/demo/scripts/demo.mjs verify [03]         모든 데모 코드를 타입 검사하고 실행해 예상 출력과 비교
+//   node .agents/skills/demo/scripts/demo.mjs list [03]           데모가 있는 슬라이드 목록
 import { existsSync, mkdirSync, mkdtempSync, readFileSync, readdirSync, rmSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { dirname, join, relative, resolve } from "node:path";
@@ -140,6 +141,24 @@ export function writeDemo(code, target, { append = false } = {}) {
   } else {
     writeFileSync(target, code);
   }
+}
+
+// VS Code에서 파일을 엽니다. code 명령이 없거나 실패해도 오류로 보지 않고 false를 돌려줍니다.
+// 테스트에서는 환경 변수 DEMO_NO_OPEN으로 열지 않게 합니다.
+export function openInEditor(target) {
+  if (process.env.DEMO_NO_OPEN) return false;
+  // Windows의 code는 code.cmd라서 셸을 거쳐야 실행됩니다.
+  const r = spawnSync("code", ["-r", target], { stdio: "ignore", shell: process.platform === "win32" });
+  return r.status === 0;
+}
+
+// 시연 코드를 찾아 파일에 쓰고 VS Code에서 엽니다. 운영 체제와 셸에 관계없이 명령 한 번으로 끝납니다.
+export function openDemo(key, file, { append = false } = {}) {
+  const demo = resolveDemo(isNextWord(key) ? nextKey() : key);
+  saveLastKey(demo.key);
+  const target = resolve(ROOT, file ?? DEFAULT_TARGET);
+  writeDemo(demo.code, target, { append });
+  return { ...demo, file: relative(ROOT, target).replace(/\\/g, "/"), opened: openInEditor(target) };
 }
 
 // manifest 형식을 검사하고 오류 목록을 돌려줍니다.
@@ -278,6 +297,10 @@ function main(argv) {
       console.log(JSON.stringify(demo, null, 2));
       return 0;
     }
+    if (cmd === "open") {
+      console.log(JSON.stringify(openDemo(args[0], args[1], { append }), null, 2));
+      return 0;
+    }
     if (cmd === "write" || cmd === "check") {
       const demo = resolveDemo(args[0]);
       const target = resolve(ROOT, args[1] ?? DEFAULT_TARGET);
@@ -314,7 +337,7 @@ function main(argv) {
       }
       return 0;
     }
-    console.error("사용법: node .claude/skills/demo/scripts/demo.mjs show|write|check|verify|list ...");
+    console.error("사용법: node .agents/skills/demo/scripts/demo.mjs show|open|write|check|verify|list ...");
     return 1;
   } catch (e) {
     console.error(e.message);

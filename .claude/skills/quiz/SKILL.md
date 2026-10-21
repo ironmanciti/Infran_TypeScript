@@ -1,12 +1,14 @@
 ---
 name: quiz
-description: TypeScript 강의의 표준 퀴즈(quizzes/sectionNN.json)를 한 문제씩 3지선다로 출제하고, 오답이면 정해진 해설을 보여 준 뒤 한 번 더 풀게 하고, 마지막에 점수를 집계한다. 사용자가 "퀴즈 내줘", "섹션 2 퀴즈", "문제 풀래", "복습 문제", "quiz" 같은 요청을 하면 사용한다.
+description: TypeScript 강의의 표준 퀴즈(quizzes/sectionNN.json)를 한 문제씩 3지선다로 출제하고, 오답이면 정해진 해설을 보여 준 뒤 한 번 더 풀게 하고, 마지막에 점수를 집계한다. 사용자가 "퀴즈 내줘", "섹션 2 퀴즈", "문제 풀래", "복습 문제", "quiz", "/quiz", "$quiz" 같은 요청을 하면 사용한다.
 ---
 
 # TypeScript 강의 퀴즈
 
 모든 수강생이 **같은 문제, 같은 해설**로 학습하도록 진행하는 퀴즈다.
 문제와 해설은 모두 JSON 파일에 정해져 있다. **AI가 문제나 해설을 새로 만들지 않는다.**
+
+이 스킬은 Claude Code(`/quiz`), Codex(`$quiz`), Gemini CLI("섹션 2 퀴즈 내줘")에서 똑같이 동작한다. 진행 상황 저장은 아래의 `node` 명령으로만 하며, 운영 체제나 셸에 따라 명령을 바꾸지 않는다.
 
 ## 1. 문제 파일 찾기
 
@@ -26,7 +28,7 @@ description: TypeScript 강의의 표준 퀴즈(quizzes/sectionNN.json)를 한 �
 섹션이 정해지면 문제를 내기 전에 저장된 진행 상황을 확인한다.
 
 ```
-node .claude/skills/quiz/scripts/quiz-progress.mjs show <섹션 번호>
+node .agents/skills/quiz/scripts/quiz-progress.mjs show <섹션 번호>
 ```
 
 - `exists`가 false면 바로 1번 문제부터 시작한다.
@@ -36,7 +38,7 @@ node .claude/skills/quiz/scripts/quiz-progress.mjs show <섹션 번호>
   이어서 풀까요, 처음부터 풀까요? (이어서 / 처음부터)
   ```
   - "이어서"(또는 "계속", "응" 같은 긍정): `results`로 점수와 문제별 결과를 되살리고, `next + 1`번 문제부터 낸다. `attempt`가 1이면 그 문제는 이미 한 번 틀린 상태이므로 제목에 "(다시 풀기)"를 붙이고, 이번 답이 두 번째 시도다. 진행 방식 안내는 생략한다.
-  - "처음부터": `node .claude/skills/quiz/scripts/quiz-progress.mjs clear <섹션 번호>`를 실행하고 1번 문제부터 시작한다.
+  - "처음부터": `node .agents/skills/quiz/scripts/quiz-progress.mjs clear <섹션 번호>`를 실행하고 1번 문제부터 시작한다.
   - 그 밖의 입력이면 "이어서 / 처음부터 중 하나로 답해 주세요."라고 다시 묻는다.
 - `stale`이 true면 "문제 파일이 바뀌어 처음부터 시작합니다."라고 알리고, clear를 실행한 뒤 1번 문제부터 시작한다.
 
@@ -65,7 +67,7 @@ node .claude/skills/quiz/scripts/quiz-progress.mjs show <섹션 번호>
 8. 매 채점(통과 포함) 뒤 `📊 현재 점수: 맞음 N / 틀림 M / 통과 P`를 보여 준다.
 9. **진행 상황 저장**: 매 채점(통과 포함) 뒤, 다음 문제를 내기 전에 저장한다. 대화가 갑자기 끊겨도 이어 풀 수 있게 하려는 것이다.
    ```
-   node .claude/skills/quiz/scripts/quiz-progress.mjs save <섹션 번호> --next <지금 낼 문제 순번(0부터)> --attempt <그 문제에서 틀린 횟수> --results <지금까지 결과>
+   node .agents/skills/quiz/scripts/quiz-progress.mjs save <섹션 번호> --next <지금 낼 문제 순번(0부터)> --attempt <그 문제에서 틀린 횟수> --results <지금까지 결과>
    ```
    - `results`는 끝난 문제의 결과를 순서대로 쉼표로 잇는다. `O` = 첫 시도에 정답, `R` = 두 번째 시도에 정답, `X` = 두 번 틀림, `P` = 통과. 예: `O,O,R,X,P`
    - 정답이거나 두 번째 오답이거나 통과면 다음 문제로 넘어가므로 `--next`는 1 늘리고 `--attempt 0`.
@@ -73,7 +75,7 @@ node .claude/skills/quiz/scripts/quiz-progress.mjs show <섹션 번호>
    - 마지막 문제를 끝냈으면 save 대신 5장의 clear를 실행한다.
    - 저장 명령이 실패해도 퀴즈는 계속 진행하고, 사용자에게 "진행 상황을 저장하지 못했습니다."라고 한 줄 알린다.
 10. **종료**: 사용자가 "종료"라고 입력하면(시도로 세지 않는다) 바로 끝내지 말고 "퀴즈를 종료할까요? (예 / 아니요)"라고 묻는다.
-   - "예", "네", "응", "맞아" 같은 긍정 답이면: `## 🛑 퀴즈 종료: 맞음 N / 틀림 M / 통과 P (전체 T문제 중 K문제 진행)`을 보여 준다. 풀던 문제는 점수에 넣지 않고, 정답도 알려 주지 않는다. 푼 문제가 있으면 문제별 결과 표와 📌 복습 포인트(5장과 같은 형식)를 보여 준다. 진행 상황은 지우지 않고, 마지막에 "다음에 `/quiz 섹션 N`을 실행하면 이어서 풀 수 있습니다."라고 알린 뒤 끝낸다.
+   - "예", "네", "응", "맞아" 같은 긍정 답이면: `## 🛑 퀴즈 종료: 맞음 N / 틀림 M / 통과 P (전체 T문제 중 K문제 진행)`을 보여 준다. 풀던 문제는 점수에 넣지 않고, 정답도 알려 주지 않는다. 푼 문제가 있으면 문제별 결과 표와 📌 복습 포인트(5장과 같은 형식)를 보여 준다. 진행 상황은 지우지 않고, 마지막에 "다음에 "섹션 N 퀴즈 내줘"라고 하면 이어서 풀 수 있습니다."라고 알린 뒤 끝낸다.
    - 그 밖의 답이면: "계속 진행합니다."라고 알리고 풀던 문제를 그대로 다시 낸다. 시도 횟수는 그대로 유지한다.
 
 ## 3. 해설 규칙
@@ -102,7 +104,7 @@ node .claude/skills/quiz/scripts/quiz-progress.mjs show <섹션 번호>
 
 ## 5. 마무리
 
-모든 문제를 마치면 `node .claude/skills/quiz/scripts/quiz-progress.mjs clear <섹션 번호>`로 진행 상황을 지우고 아래를 보여 준다.
+모든 문제를 마치면 `node .agents/skills/quiz/scripts/quiz-progress.mjs clear <섹션 번호>`로 진행 상황을 지우고 아래를 보여 준다.
 
 1. `## 🏁 최종 결과: 맞음 N / 틀림 M / 통과 P`
 2. 문제별 결과 표: 번호, 주제, 결과(⭕, ⭕ (재시도), ❌, ⏭ 통과)
